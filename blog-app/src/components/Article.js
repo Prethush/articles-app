@@ -1,9 +1,36 @@
 import React from "react";
+import { articlesURL } from "../utils/constant";
+import Loader from "./Loader";
 
 class Article extends React.Component{
     constructor(props){
         super();
-        this.state = {};
+        this.state = {
+            article: "",
+            error: ""
+        };
+    }
+
+    componentDidMount() {
+        this.getArticle();
+    }
+
+    getArticle = () => {
+        
+        fetch(articlesURL + `/${this.props.match.params.slug}`)
+        .then((res) => {
+            if(!res.ok)  {
+                throw new Error(res.statusText);
+            }
+            return res.json();
+        })
+        .then((data) => {
+            console.log(data);
+            this.setState({article: data.article });
+        })
+        .catch((err) => {
+            this.setState({error: "Not able to fetch Articles"});
+        });
     }
     
     getDate = (date) => {
@@ -12,9 +39,15 @@ class Article extends React.Component{
      }
 
     render() {
-        console.log(this.props.location);
-        let article = this.props.location.article;
-        let {tagList} = article; 
+        let {error, article} = this.state;
+            if(error) {
+                return <h2 className="text-red-500 text-center text-xl mt-8">{error}</h2>
+            }
+
+            if(!article) {
+                return < Loader />
+            } 
+            let {tagList} = article; 
         return (
             <main>
 
@@ -35,12 +68,12 @@ class Article extends React.Component{
                         }
 
                    </div>
-                </section>
+                </section> 
 
                 {/* article body */}
-                <section className="px-20 py-12">
+                 <section className="px-20 py-12">
                     <p className="text-xl">{article.body}</p>
-                </section>
+                </section>  
             </main>
         )
     }

@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import { validate } from "../utils/validate";
 
 class Signin extends React.Component {
     constructor(props) {
@@ -7,13 +8,20 @@ class Signin extends React.Component {
         this.state = {
             email: "",
             passwd: "",
-            errors: {}
+            errors: {
+                email: "",
+                passwd: ""
+            }
         };
     }
 
+
     handleChange = ({target}) => {
         let {name, value} = target;
-        this.setState({[name]: value});
+        let {errors} = this.state;
+        validate(errors, name, value);
+        this.setState({[name]: value, errors});
+
     }
 
     handleSubmit = (event) => {
@@ -21,6 +29,7 @@ class Signin extends React.Component {
     }
 
     render() {
+        let {email, passwd} = this.state.errors;
         return (
             <main>
                 <section className="mt-20">
@@ -33,13 +42,13 @@ class Signin extends React.Component {
                         </div>
                         <fieldset className="my-3">
 
-                            <input className="block w-full my-3 py-2 px-3 border border-gray-400 rounded-md"type="email" placeholder="Enter Email" value={this.state.email} name="email" onChange={(e) => this.handleChange(e)}/>
-                            
+                            <input className="block w-full my-3 py-2 px-3 border border-gray-400 rounded-md"type="text" placeholder="Enter Email" value={this.state.email} name="email" onChange={(e) => this.handleChange(e)}/>
+                            <span className="text-red-500">{email}</span>
 
                             <input className="block w-full my-3 py-2 px-3 border border-gray-400 rounded-md"type="password" placeholder="Enter Password" value={this.state.passwd} name="passwd" onChange={(e) => this.handleChange(e)}/>
-                            
+                            <span className="text-red-500">{passwd}</span>
 
-                            <input type="submit" value="Login In" className="block w-full my-6 py-2 px-3 bg-blue-500 text-white font-bold"/>
+                            <input type="submit" value="Login In" className="block w-full my-6 py-2 px-3 bg-blue-500 text-white font-bold cursor-pointer" disabled={passwd || email}/>
 
                         </fieldset>
                     </form>
