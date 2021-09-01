@@ -32256,6 +32256,11 @@ video {
   content: none;
 }
 
+input[type="submit"]:disabled {
+  background-color:lightblue;
+  cursor: auto;
+}
+
 @media (min-width: 640px){
   .sm\:container{
     width: 100%;
