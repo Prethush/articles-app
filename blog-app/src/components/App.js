@@ -18,13 +18,15 @@ class App extends React.Component{
         this.state = {
             isLoggedIn: false,
             userInfo: "",
-            loading: true
+            loading: false
         }
     }
 
    componentDidMount = () => {
-       let token = localStorage.getItem("token");
-       if(token) {
+       let user = JSON.parse(localStorage.getItem("userInfo"));
+      
+       if(user) {
+           let {token} = token; 
            let bearer = "Bearer " + token;
            fetch(userURL, {
                method: "GET",
@@ -40,6 +42,8 @@ class App extends React.Component{
                }
            })
            .catch((err) => console.log(err));
+       } else {
+           this.setState({loading: false});
        }
    }
     
@@ -64,9 +68,7 @@ class App extends React.Component{
                         < Route path="/login">
                             < Signin />
                         </Route>
-                        < Route path="/dashboard">
-                            < Dashboard/>
-                        </Route>
+                        < Route path="/dashboard" component={Dashboard}/>
                         < Route path="*">
                             < Nomatch />
                         </Route>

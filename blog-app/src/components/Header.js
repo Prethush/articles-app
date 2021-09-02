@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 
 function Header(props) {
-     let user = props.userInfo;
+     
     return (
        
         <header className="flex justify-between bg-gray-300 px-20 py-8 items-center">
