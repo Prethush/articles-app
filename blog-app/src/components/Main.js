@@ -17,14 +17,13 @@ class Main extends React.Component {
                 activePage: 1,
                 tagSelected: "",
                 feedSelected: "",
-                isLoggedIn: JSON.parse(localStorage.getItem("userInfo")) ? true : false
             }
         }
     
 
     componentDidMount() {
-       let {isLoggedIn} = this.state;
-       if(isLoggedIn) {
+        console.log(this.props, "props");
+       if(this.props.isLoggedIn) {
            this.setState({feedSelected: "myfeed"}, this.myFeed);
        }else {
            this.setState({feedSelected: "global"}, this.getArticles);
@@ -102,7 +101,7 @@ class Main extends React.Component {
 
                     {/* feeds part */}
                         <div className="flex mb-3">
-                            <span className={!isLoggedIn ?  "hidden": feedSelected === "myfeed" ? "text-xl mr-8 cursor-pointer text-green-500": "text-xl mr-8 cursor-pointer green"}  onClick={this.myFeed}> <i className="fas fa-newspaper mr-2"></i>
+                            <span className={!this.props.isLoggedIn?  "hidden": feedSelected === "myfeed" ? "text-xl mr-8 cursor-pointer text-green-500": "text-xl mr-8 cursor-pointer green"}  onClick={this.myFeed}> <i className="fas fa-newspaper mr-2"></i>
                                 My feed
                             </span>
                             <span className={feedSelected === "global" ? "cursor-pointer text-xl text-green-500": "cursor-pointer text-xl"} onClick={() => this.setState({
