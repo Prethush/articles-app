@@ -17,7 +17,7 @@ class Main extends React.Component {
                 activePage: 1,
                 tagSelected: "",
                 feedSelected: "",
-                isLoggedIn: props.userInfo ? true : false 
+                isLoggedIn: JSON.parse(localStorage.getItem("userInfo")) ? true : false
             }
         }
     
@@ -66,7 +66,7 @@ class Main extends React.Component {
     myFeed = () => {
         
         let offset = (this.state.activePage - 1) * 10;
-        let token = this.props.userInfo.token;
+        let token = JSON.parse(localStorage.getItem("userInfo")).token;
             let bearer = "Bearer " + token;
             fetch(feedURL + `?/limit=${this.state.activePage}&skip=${offset}`, {
                 method: "GET",
@@ -140,7 +140,6 @@ class Main extends React.Component {
                             />
                         </div>
                 </main>
-            
         )
     }
 }

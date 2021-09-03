@@ -47,8 +47,8 @@ class Signin extends React.Component {
             .then((data) => {
                 console.log(data);
                 if(data.user) {
-                    this.setState({email: "", passwd: "", isLoggedIn: true, info: ""});
-                    localStorage.setItem("userInfo", JSON.stringify(data.user));
+                    this.setState({email: "", passwd: "", isLoggedIn: true, info: ""}, () => this.handleLocalStorage(data.user));
+                   
                 }
                 if(data.errors) {
                     let key = Object.keys(data.errors)[0];
@@ -59,16 +59,17 @@ class Signin extends React.Component {
        }    
     }
 
+    handleLocalStorage = (user) => {
+        localStorage.setItem("userInfo", JSON.stringify(user));
+    }
+
     render() {
         let {info, error, isLoggedIn} = this.state;
         if(error) {
             return <h2 className="text-red-500 text-center text-xl mt-8">{error}</h2>
         }
         if(isLoggedIn) {
-            return < Redirect to= {{
-                pathname: "/dashboard",
-                userInfo: JSON.parse(localStorage.getItem("userInfo"))
-            }} />
+            return < Redirect to= "/dashboard" />
         }
         return (
             <main>

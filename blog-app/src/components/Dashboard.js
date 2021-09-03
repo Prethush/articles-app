@@ -1,16 +1,16 @@
 
 import Main from "./Main";
-import Home from "./Home";
 import {Redirect} from "react-router-dom";
 
 function Dashboard(props) {
-   let {userInfo} = props.location;
-   console.log(userInfo, "userInfo");
+  
+    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    console.log(userInfo);
     return (
         <>
-            {
-                userInfo ? < Main userInfo = {userInfo} /> : < Redirect to="/" />
-            }
+         {
+             userInfo ? < Main /> : < Redirect to="/" />
+         }
         </>
     )
 }

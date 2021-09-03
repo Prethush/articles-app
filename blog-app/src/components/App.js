@@ -18,15 +18,14 @@ class App extends React.Component{
         this.state = {
             isLoggedIn: false,
             userInfo: "",
-            loading: false
+            loading: true
         }
     }
 
    componentDidMount = () => {
        let user = JSON.parse(localStorage.getItem("userInfo"));
-      
        if(user) {
-           let {token} = token; 
+           let {token} = user; 
            let bearer = "Bearer " + token;
            fetch(userURL, {
                method: "GET",
@@ -48,12 +47,13 @@ class App extends React.Component{
    }
     
         render() {
-            if(this.state.loading) {
-                return < Loader />
-            }
+                if(this.state.loading) {
+                    return < Loader />
+                }
             return (
                 < Router>
                     < Header/>
+                    
                     < Switch >
                         < Route path="/" exact>
                            {this.state.isLoggedIn ? < Redirect to="/dashboard" /> : < Home {...this.state}/>} 
