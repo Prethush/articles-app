@@ -9,7 +9,7 @@ import Nomatch from "./Nomatch";
 import Dashboard from "./Dashboard";
 import React from "react";
 import { userURL } from "../utils/constant";
-import Loader from "./Loader";
+import FullPageLoader from "./FullPageLoader";
 
 class App extends React.Component{
        
@@ -17,66 +17,99 @@ class App extends React.Component{
         super();
         this.state = {
             isLoggedIn: false,
-            userInfo: "",
+            user: "",
             loading: true
         }
     }
 
-   componentDidMount = () => {
-       let user = JSON.parse(localStorage.getItem("userInfo"));
-       if(user) {
-           let {token} = user; 
+   componentDidMount(){
+      let token = localStorage.getItem("token");
+       if(token) {
            let bearer = "Bearer " + token;
            fetch(userURL, {
                method: "GET",
                headers: {
-                   "Content-type": "application/json",
                    "Authorization": bearer
                }
            })
-           .then((res) => res.json())
-           .then((data) => {
-               if(data.user) {
-                   this.setState({isLoggedIn: true, userInfo: data.user, loading: false})
+           .then((res) => {
+               if(!res.ok) {
+                   return res.json().then(({errors}) => {
+                       return Promise.reject(errors);
+                   }) 
                }
+               return res.json();
+           })
+           .then((data) => {
+               this.handleUser(data.user);
            })
            .catch((err) => console.log(err));
-       } else {
+       }else {
            this.setState({loading: false});
        }
    }
+
+        handleUser = (user) => {
+            this.setState({isLoggedIn: true, user, loading: false});
+            localStorage.setItem("token", user.token);
+        }
     
         render() {
                 if(this.state.loading) {
-                    return < Loader />
+                    return < FullPageLoader />
                 }
             return (
                 < Router>
-                    < Header/>
-                    
-                    < Switch >
-                        < Route path="/" exact>
-                           {this.state.isLoggedIn ? < Redirect to="/dashboard" /> : < Home {...this.state}/>} 
-                        </Route>
-                        < Route path="/articles" exact>
-                            < Main/>
-                        </Route>
-                        < Route path="/articles/:slug" component={Article} />
-                        < Route path="/register">
-                            < Signup />
-                        </Route>
-                        < Route path="/login">
-                            < Signin />
-                        </Route>
-                        < Route path="/dashboard" component={Dashboard}/>
-                        < Route path="*">
-                            < Nomatch />
-                        </Route>
-                    </Switch>
+                    < Header {...this.state} />
+                    {
+                        this.state.isLoggedIn ? < AuthenticatedApp {...this.state}/> : < UnauthenticatedApp handleUser = {this.handleUser} {...this.state}/>
+                    }
                 </Router>
             )
         }
     }
 
+    function UnauthenticatedApp(props) {
+        console.log("Bye");
+        return (
+            < Switch >
+            < Route path="/" exact>
+                < Home />
+            </Route>
+            < Route path="/articles" exact>
+                < Main {...props} />
+            </Route>
+            < Route path="/articles/:slug" component={Article} />
+            < Route path="/register">
+                < Signup handleUser = {props.handleUser}/>
+            </Route>
+            < Route path="/login">
+                < Signin handleUser={props.handleUser} />
+            </Route>
+            < Route path="*">
+                < Nomatch />
+            </Route>
+        </Switch>
+        )
+    }
+
+    function AuthenticatedApp(props) {
+        
+        return (
+        < Switch >
+            < Route path="/dashboard">
+                < Dashboard {...props}/>
+            </Route>
+            < Route path="/articles" exact>
+                < Main {...props} />
+            </Route>
+            < Route path="/articles/:slug" component={Article} />
+            
+            < Route path="*">
+                < Nomatch />
+            </Route>
+        </Switch>
+        )
+    }
 
 export default App;

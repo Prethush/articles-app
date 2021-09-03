@@ -1,5 +1,5 @@
 import React from "react";
-import {Link, Redirect} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import { validate } from "../utils/validate";
 import { registerURL } from "../utils/constant";
 
@@ -10,8 +10,6 @@ class Signup extends React.Component {
             username: "",
             email: "",
             passwd: "",
-            isRegistered: false,
-            userInfo: "",
             errors: {
                 username: "",
                 passwd: "",
@@ -33,52 +31,36 @@ class Signup extends React.Component {
         if(username && passwd && email) {
             fetch(registerURL, {
                 method: "POST",
-                body: JSON.stringify({
-                    user: {
-                        username: username,
-                        email: email,
-                        password: passwd
-                    }
-                }),
+                body: JSON.stringify({user: {username, password: passwd, email}}),
                 headers: {
                     "Content-type": "application/json; charset=UTF-8"
                 }
             })
             .then((res) => {
-               if(res.status === 404) {
-                   throw new Error(res.statusText);
-               }
+                if(!res.ok) {
+                   return res.json().then((data) => {
+                        for(let key in data.errors){
+                            errors[key] = `${key} ${data.errors[key]}`; 
+                          
+                        }
+                       return Promise.reject(errors);    
+                   });
+                }
+                
                 return res.json();
             })
             .then((data) => {
-                console.log(data);
-                if(data.user) {
-                    this.setState({username: "", passwd: "", email: "", isRegistered: true})
-                }
-                if(data.errors){
-                    for(let key in data.errors){
-                        errors[key] = `${key} ${data.errors[key]}`;
-                    }
-                    this.setState({username: "", passwd: "", email: "", errors});
-                }
+                this.props.handleUser(data.user);
+                this.props.history.push("/login");
             })
-            .catch((err) => {
-                this.setState({username: "", passwd: "", email: "", info: "Something Went Wrong"});
-            })
-            
+            .catch((err) => this.setState({passwd: "", email: "", username: "", errors}));
         }
-       
     }
 
     render() {
         let {username, passwd, email} = this.state.errors;
         let {info} = this.state;
-        if(info) {
-            return <h2 className="text-red-500 text-center text-xl mt-8">{info}</h2>
-        }
-        if(this.state.isRegistered) {
-          return  < Redirect to="/login" />
-        }
+        
         return (
             <main>
                 <section className="mt-20">
@@ -109,4 +91,4 @@ class Signup extends React.Component {
     }
 }
 
-export default Signup;
+export default withRouter(Signup);
