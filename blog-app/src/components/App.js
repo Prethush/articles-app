@@ -1,15 +1,18 @@
-import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Main from "./Main";
 import Header from "./Header";
-import Home from "./Home";
+// import Home from "./Home";
 import Signup from "./Signup";
 import Signin from "./Signin";
 import Article from "./Article";
 import Nomatch from "./Nomatch";
-import Dashboard from "./Dashboard";
+// import Dashboard from "./Dashboard";
 import React from "react";
 import { userURL } from "../utils/constant";
 import FullPageLoader from "./FullPageLoader";
+import NewArticle from "./NewArticle";
+import Settings from "./Settings";
+import Profile from "./Profile";
 
 class App extends React.Component{
        
@@ -55,6 +58,10 @@ class App extends React.Component{
             this.setState({isLoggedIn: true, user, loading: false});
             localStorage.setItem("token", user.token);
         }
+
+        handleLogout = () => {
+            this.setState({isLoggedIn: false});
+        }
     
         render() {
                 if(this.state.loading) {
@@ -62,9 +69,9 @@ class App extends React.Component{
                 }
             return (
                 < Router>
-                    < Header {...this.state} />
+                    < Header {...this.state} handleLogout={this.handleLogout}/>
                     {
-                        this.state.isLoggedIn ? < AuthenticatedApp {...this.state}/> : < UnauthenticatedApp handleUser = {this.handleUser} {...this.state}/>
+                        this.state.isLoggedIn ? < AuthenticatedApp {...this.state} handleUser={this.handleUser}/> : < UnauthenticatedApp handleUser = {this.handleUser} {...this.state}/>
                     }
                 </Router>
             )
@@ -72,7 +79,7 @@ class App extends React.Component{
     }
 
     function UnauthenticatedApp(props) {
-        console.log("Bye");
+        
         return (
             < Switch >
             {/* < Route path="/" exact>
@@ -96,7 +103,7 @@ class App extends React.Component{
     }
 
     function AuthenticatedApp(props) {
-        console.log("Hai");
+        
         return (
         < Switch >
             {/* < Route path="/dashboar">
@@ -109,7 +116,13 @@ class App extends React.Component{
                 < Main {...props} />
             </Route>
             < Route path="/articles/:slug" component={Article} />
-            
+            < Route path="/addArticle">
+                < NewArticle />
+            </Route>
+            < Route path="/settings">
+                < Settings user={props.user} handleUser={props.handleUser}/>
+            </Route>
+            < Route path="/profiles/:id" component={Profile} />
             < Route path="*">
                 < Nomatch />
             </Route>

@@ -52,7 +52,7 @@ class Article extends React.Component{
             <main>
 
                 {/* hero section */}
-                <section className="px-20 bg-blue-800 text-white py-12">
+                <section className="px-20 bg-articlePage text-white py-12">
                     <h2 className="mt-2 mb-3 text-4xl">{article.title}</h2>
                     <p className="">{article.description}</p>
                     <div className="flex py-6 items-center">
