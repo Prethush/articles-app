@@ -42,7 +42,7 @@ class Signin extends React.Component {
             })
             .then((data) => {
                 this.props.handleUser(data.user);
-                this.props.history.push("/dashboard");
+                this.props.history.push("/");
             })
             .catch((err) => this.setState({passwd: "", email: "", error}));
         }

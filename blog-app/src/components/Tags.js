@@ -44,7 +44,7 @@ class Tags extends React.Component{
                 {
                     allTags.map(tag => {
                         if(tag){
-                            return  <span key={tag} className="bg-gray-700 p-2 cursor-pointer text-white text-xs rounded-md mx-1 my-1" onClick={(e) => this.props.selectTag(e)} data-value={tag}>{tag}</span>
+                            return  <span key={tag} className={this.props.tagSelected === tag ? "bg-red-500 p-2 cursor-pointer text-white text-xs rounded-md mx-1 my-1" : "bg-gray-700 p-2 cursor-pointer text-white text-xs rounded-md mx-1 my-1"} onClick={(e) => this.props.selectTag(e)} data-value={tag}>{tag}</span>
                         }
                     })
                 }

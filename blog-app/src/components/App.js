@@ -24,6 +24,7 @@ class App extends React.Component{
 
    componentDidMount(){
       let token = localStorage.getItem("token");
+      console.log(token)
        if(token) {
            let bearer = "Bearer " + token;
            fetch(userURL, {
@@ -41,6 +42,7 @@ class App extends React.Component{
                return res.json();
            })
            .then((data) => {
+               console.log(data, "data");
                this.handleUser(data.user);
            })
            .catch((err) => console.log(err));
@@ -73,10 +75,10 @@ class App extends React.Component{
         console.log("Bye");
         return (
             < Switch >
-            < Route path="/" exact>
+            {/* < Route path="/" exact>
                 < Home />
-            </Route>
-            < Route path="/articles" exact>
+            </Route> */}
+            < Route path="/" exact>
                 < Main {...props} />
             </Route>
             < Route path="/articles/:slug" component={Article} />
@@ -94,11 +96,14 @@ class App extends React.Component{
     }
 
     function AuthenticatedApp(props) {
-        
+        console.log("Hai");
         return (
         < Switch >
-            < Route path="/dashboard">
+            {/* < Route path="/dashboar">
                 < Dashboard {...props}/>
+            </Route> */}
+            < Route path="/" exact>
+                < Main {...props} />
             </Route>
             < Route path="/articles" exact>
                 < Main {...props} />

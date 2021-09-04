@@ -1,12 +1,8 @@
-import "../style/loader.css";
+import "../style/fullPageLoader.css";
 
 function FullPageLoader(props) {
 
-    return <div className="bouncing-loader h-screen flex  items-center justify-center">
-                <div></div>
-                <div></div>
-                <div></div>
-           </div>
+    return <div id="loading-bar-spinner" class="spinner"><div class="spinner-icon"></div></div>
 }
 
 export default FullPageLoader;
