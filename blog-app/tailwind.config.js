@@ -9,6 +9,9 @@ module.exports = {
       },
       fontFamily: {
         "logo": ["Lobster Two"]
+      },
+      colors: {
+        articlePage: "rgb(51,51,51)"
       }
 
     },

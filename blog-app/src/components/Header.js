@@ -1,6 +1,12 @@
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 
 function Header(props) {
+
+    function handleLogout() {
+        localStorage.clear();
+        props.handleLogout();
+        props.history.push("/");
+    }
      
     return (
        
@@ -10,38 +16,60 @@ function Header(props) {
                 </Link>
                 <nav>
                     <ul className="flex">
-                        < Link to="/register">
-                                <li className={props.isLoggedIn ? "hidden": "bg-blue-500 py-3 px-4 text-white font-bold rounded-lg mr-6"}>Sign up</li>
-                        </Link>
-                        < Link to="/login">
-                                <li className={props.isLoggedIn ? "hidden": "bg-blue-500 py-3 px-4 text-white font-bold rounded-lg mr-6"}>Log in</li>
-                        </Link>
-
-                        <Link to="">
-                            <li className={props.isLoggedIn ? "flex items-center text-xl mx-3": "hidden"}>
-                                <i className="fas fa-user mr-2"></i>
-                                <span className="">{props.user.username}</span>
-                            </li>
-                        </Link>
-                        <Link to="">
-                            <li className={props.isLoggedIn ? "text-xl mx-3": "hidden"}>
-                                <span className="">Setings</span>
-                            </li>
-                        </Link>
-                        <Link to="">
-                            <li className={props.isLoggedIn ? "text-xl mx-3": "hidden"}>
-                                <span className="">New Article</span>
-                            </li>
-                        </Link>
-                        <Link to="">
-                            <li className={props.isLoggedIn ? "text-xl mx-3": "hidden"}>
-                                <span className="">Profile</span>
-                            </li>
-                        </Link>
+                      {
+                          props.isLoggedIn ? < Authenticated user = {props.user.username} handleLogout={handleLogout}/> : < Unauthenticated />
+                      } 
                     </ul>
                 </nav>
         </header>
     )
 }
 
-export default Header;
+function Authenticated(props) {
+    return (
+        <>
+            <Link to="">
+                <li className="flex items-center text-xl mx-3">
+                    <i className="fas fa-user mr-2"></i>
+                    <span className="">{props.user}</span>
+                </li>
+            </Link>
+            <Link to="/settings">
+                <li className="text-xl mx-3">
+                    <i className="fas fa-cog mr-2"></i>
+                    <span className="">Setings</span>
+                </li>
+            </Link>
+            <Link to="/addArticle">
+                <li className="text-xl mx-3">
+                    <i className="fas fa-newspaper mr-2"></i>
+                    <span className="">New Article</span>
+                </li>
+            </Link>
+             <Link to={`/profiles/${props.user.username}`}>
+                <li className="text-xl mx-3">
+                    <span className="">Profile</span>
+                </li>
+            </Link>
+           <li className="text-xl">
+               <span className="cursor-pointer" onClick={props.handleLogout}>Logout</span>
+           </li>
+        </>
+    )
+}
+
+function Unauthenticated(props) {
+    return (
+        <>
+              < Link to="/register">
+                    <li className="bg-blue-500 py-3 px-4 text-white font-bold rounded-lg mr-6">Sign up</li>
+             </Link>
+             < Link to="/login">
+                    <li className="bg-blue-500 py-3 px-4 text-white font-bold rounded-lg mr-6">Log in</li>
+            </Link>
+
+        </>
+    )
+}
+
+export default withRouter(Header);

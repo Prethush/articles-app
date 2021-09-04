@@ -50,7 +50,7 @@ class Main extends React.Component {
         })
         .then((data) => {
             console.log(data);
-            this.setState({articles: data.articles, articlesCount: data.articlesCount});
+            this.setState({articles: data.articles, articlesCount: data.articlesCount, activePage: 1});
         })
         .catch((err) => {
             this.setState({error: "Not able to fetch Articles"});
@@ -65,13 +65,12 @@ class Main extends React.Component {
     myFeed = () => {
         
         let offset = (this.state.activePage - 1) * 10;
-        let token = localStorage.token;
+        let token = localStorage.getItem("token");
             let bearer = "Bearer " + token;
             fetch(feedURL + `?/limit=${this.state.activePage}&skip=${offset}`, {
                 method: "GET",
                 headers: {
                     "Authorization": bearer,
-                    "Content-type": "application/json"
                 }
             })
             .then((res) => {
@@ -89,11 +88,8 @@ class Main extends React.Component {
         
          }
 
-    
-     
-
     render() {
-        let {articles, error, articlesCount, articlesPerPage, activePage, feedSelected, isLoggedIn, tagSelected} = this.state;
+        let {articles, error, articlesCount, articlesPerPage, activePage, feedSelected, tagSelected} = this.state;
         return (
             
             // Hero section
@@ -101,10 +97,10 @@ class Main extends React.Component {
 
                     {/* feeds part */}
                         <div className="flex mb-3">
-                            <span className={!this.props.isLoggedIn?  "hidden": feedSelected === "myfeed" ? "text-xl mr-8 cursor-pointer text-green-500": "text-xl mr-8 cursor-pointer green"}  onClick={this.myFeed}> <i className="fas fa-newspaper mr-2"></i>
+                            <span className={!this.props.isLoggedIn?  "hidden": feedSelected === "myfeed" ? "text-xl mr-8 cursor-pointer text-green-500 pb-2 border-b-2 border-green-500": "text-xl mr-8 cursor-pointer green"}  onClick={this.myFeed}> <i className="fas fa-newspaper mr-2"></i>
                                 My feed
                             </span>
-                            <span className={feedSelected === "global" ? "cursor-pointer text-xl text-green-500": "cursor-pointer text-xl"} onClick={() => this.setState({
+                            <span className={feedSelected === "global" ? "cursor-pointer text-xl text-green-500 pb-2 border-b-2 border-green-500": "cursor-pointer text-xl"} onClick={() => this.setState({
                                 tagSelected: "",
                                 feedSelected: "global"
                             }, this.getArticles)}>

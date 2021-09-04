@@ -48,12 +48,10 @@ class Signin extends React.Component {
         }
     }
 
-    handleLocalStorage = (user) => {
-        localStorage.setItem("userInfo", JSON.stringify(user));
-    }
+    
 
     render() {
-        let {error, isLoggedIn} = this.state;
+        let {error} = this.state;
         
         return (
             <main>
