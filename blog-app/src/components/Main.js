@@ -22,7 +22,7 @@ class Main extends React.Component {
     
 
     componentDidMount() {
-        console.log(this.props, "props");
+       
        if(this.props.isLoggedIn) {
            this.setState({feedSelected: "myfeed"}, this.myFeed);
        }else {
@@ -59,13 +59,13 @@ class Main extends React.Component {
 
     selectTag = ({target}) => {
         let {value} = target.dataset;
-        this.setState({tagSelected: value, activePage: 1}, this.getArticles);
+        this.setState({tagSelected: value, activePage: 1, feedSelected: ""}, this.getArticles);
     }
 
     myFeed = () => {
         
         let offset = (this.state.activePage - 1) * 10;
-        let token = JSON.parse(localStorage.getItem("userInfo")).token;
+        let token = localStorage.token;
             let bearer = "Bearer " + token;
             fetch(feedURL + `?/limit=${this.state.activePage}&skip=${offset}`, {
                 method: "GET",
@@ -82,7 +82,7 @@ class Main extends React.Component {
             })
             .then((data) => 
             {   
-                this.setState({articles: data.articles, articlesCount: data.articlesCount, feedSelected: "myfeed"})
+                this.setState({articles: data.articles, articlesCount: data.articlesCount, feedSelected: "myfeed", tagSelected: ""})
             })
             
             .catch((err) => this.setState({error: "Not able to fetch Articles"}));
@@ -110,10 +110,10 @@ class Main extends React.Component {
                             }, this.getArticles)}>
                                 <i className="fas fa-newspaper mr-2"></i>
                                 Global Feed 
-                                </span>
-                            <div className={tagSelected && feedSelected === "global" ? "visible text-xl": "hidden"}>
+                            </span>
+                            <div className={tagSelected ? "visible text-xl": "hidden"}>
                                 <span className="mx-4 text-gray-500">/</span>
-                                <span className="text-green-700">#{this.state.tagSelected}</span>
+                                <span className="text-green-700 pb-2 border-b-2 border-green-700">#{this.state.tagSelected}</span>
                             </div>
                         </div>
 
@@ -125,7 +125,7 @@ class Main extends React.Component {
 
                         {/* tags part */}
                             <div className="flex-25">
-                                < Tags selectTag={this.selectTag}/>
+                                < Tags selectTag={this.selectTag} {...this.state}/>
                             </div>
                         </section>
                             
