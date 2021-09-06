@@ -65,7 +65,7 @@ class Main extends React.Component {
     myFeed = () => {
         
         let offset = (this.state.activePage - 1) * 10;
-        let token = JSON.parse(localStorage.getItem("user")).token;
+        let token = localStorage.token;
             let bearer = "Bearer " + token;
             fetch(feedURL + `?/limit=${this.state.activePage}&skip=${offset}`, {
                 method: "GET",
