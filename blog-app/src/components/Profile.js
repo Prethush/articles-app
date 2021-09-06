@@ -4,6 +4,7 @@ import { profileURL } from "../utils/constant";
 import { articlesURL } from "../utils/constant";
 import Articles from "./Articles";
 import Pagination from "./Pagination";
+import {withRouter} from "react-router-dom";
 
 class Profile extends React.Component {
 
@@ -16,7 +17,7 @@ class Profile extends React.Component {
             articlesCount: null,
             articlesPerPage: 10,
             activePage: 1,
-            feedSelected: "myArticles",
+            feedSelected: "author",
             error: ""
         }
     }
@@ -51,9 +52,8 @@ class Profile extends React.Component {
     getArticles = () => {
         let {username} = this.state.user;
         let offset = (this.state.activePage - 1) * 10;
-        let url = this.state.feedSelected === "myArticles" ? `${articlesURL}?author=${username}&limit=${this.state.articlesPerPage}&offset=${offset}` : `${articlesURL}?favorited=${username}&limit=${this.state.articlesPerPage}&offset=${offset}`;
         
-        fetch(url)
+        fetch(`${articlesURL}?${this.state.feedSelected}=${username}&limit=${this.state.articlesPerPage}&offset=${offset}`)
         .then((res) => {
             if(!res.ok)  {
                 throw new Error(res.statusText);
@@ -74,7 +74,7 @@ class Profile extends React.Component {
             return < Loader />
         }
         let {username, image, bio} = this.state.user;
-        let loggenInUser = JSON.parse(localStorage.getItem("user")).username;
+        let loggenInUser = this.props.user.username;
         let {articles, error, articlesCount, activePage, articlesPerPage, feedSelected} = this.state;
         return (
             <main>
@@ -88,8 +88,8 @@ class Profile extends React.Component {
 
                     <article className="px-40">
                         <div className="py-6">
-                            <span className={feedSelected === "myArticles" ? "cursor-pointer text-xl text-green-500 pb-2 border-b-2 border-green-500": "cursor-pointer text-xl"}onClick={() => this.setState({
-                                feedSelected: "myArticles",
+                            <span className={feedSelected === "author" ? "cursor-pointer text-xl text-green-500 pb-2 border-b-2 border-green-500": "cursor-pointer text-xl"}onClick={() => this.setState({
+                                feedSelected: "author",
                                 activePage: 1
                             }, this.getArticles)}>
                                  <i className="fas fa-newspaper mr-2"></i>
@@ -121,4 +121,4 @@ class Profile extends React.Component {
     }
 }
 
-export default Profile;
+export default withRouter(Profile);

@@ -41,7 +41,6 @@ class Signin extends React.Component {
                 return res.json();
             })
             .then((data) => {
-                
                 this.props.handleUser(data.user);
                 this.props.history.push("/");
             })

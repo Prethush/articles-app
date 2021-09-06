@@ -1,5 +1,5 @@
 import React from "react";
-import { addArticle } from "../utils/constant";
+import { articlesURL } from "../utils/constant";
 import {withRouter} from "react-router-dom";
 
 class NewArticle extends React.Component {
@@ -22,11 +22,11 @@ class NewArticle extends React.Component {
 
     handleSubmit = (event) => {
         let {title, description, body, tags, error} = this.state;
-        tags = tags.split(",");
-        let token = "Bearer " + JSON.parse(localStorage.getItem("user")).token;
+        tags = tags.split(",").map(tag => tag.trim());
+        let token = "Bearer " + localStorage.token;
         event.preventDefault();
         if(title && description && body && tags){
-           fetch(addArticle, {
+           fetch(articlesURL, {
                method: "POST",
                 body: JSON.stringify({ article: {title, description, body, tagList: tags}}),
                 headers: {

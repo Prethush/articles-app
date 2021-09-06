@@ -26,7 +26,7 @@ class App extends React.Component{
     }
 
    componentDidMount(){
-      let token = JSON.parse(localStorage.getItem("user")).token;
+      let token = localStorage.getItem("token");
        if(token) {
            let bearer = "Bearer " + token;
            fetch(userURL, {
@@ -54,10 +54,8 @@ class App extends React.Component{
    }
 
         handleUser = (user) => {
-            let {username, email, token} = user; 
-            let obj = {username, email, token}
             this.setState({isLoggedIn: true, user, loading: false});
-            localStorage.setItem("user", JSON.stringify(obj));
+            localStorage.setItem("token", user.token);
         }
 
         handleLogout = () => {
@@ -124,7 +122,8 @@ class App extends React.Component{
             < Route path="/settings">
                 < Settings user={props.user} handleUser={props.handleUser}/>
             </Route>
-            < Route path="/profiles/:id" render={(props) => < Profile {...props}  /> }>
+            < Route path="/profiles/:id">
+                < Profile user={props.user}/>
             </Route>
             < Route path="*">
                 < Nomatch />

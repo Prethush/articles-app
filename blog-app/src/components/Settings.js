@@ -37,7 +37,7 @@ class Settings extends React.Component {
                 body: JSON.stringify({user: {username, email, password: passwd, bio, image: "https://pbs.twimg.com/profile_images/1368973967025836036/yIJ1QI8o_400x400.jpg"}}),
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": "Bearer " + JSON.parse(localStorage.getItem("user")).token
+                    "Authorization": "Bearer " + localStorage.token
                 }
             })
             .then((res) => {
