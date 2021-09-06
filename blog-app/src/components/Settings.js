@@ -34,10 +34,10 @@ class Settings extends React.Component {
         if(username && image && passwd && email && bio) {
             fetch(userURL, {
                 method: "PUT",
-                body: JSON.stringify({user: {username, email, password: passwd, bio, image: "/userImg.jpg"}}),
+                body: JSON.stringify({user: {username, email, password: passwd, bio, image: "https://pbs.twimg.com/profile_images/1368973967025836036/yIJ1QI8o_400x400.jpg"}}),
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": "Bearer " + localStorage.getItem("token")
+                    "Authorization": "Bearer " + JSON.parse(localStorage.getItem("user")).token
                 }
             })
             .then((res) => {
@@ -53,7 +53,6 @@ class Settings extends React.Component {
                 return res.json();
             })
             .then((data) => {
-                
                 this.props.handleUser(data.user);
                 this.props.history.push(`/profiles/${data.user.username}`);
             })
