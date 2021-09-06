@@ -27,12 +27,14 @@ function Articles(props) {
                 {
                     articles.map(article => {
                         return (
-                            <div key={article.slug} className="bg-gray-200 flex justify-between my-3 w-full p-4 rounded-md">
+                            <div key={article.slug} className="bg-gray-200 flex justify-between my-8  w-full p-4 rounded-md">
                                 <div>
-                                    <div className="flex items-center my-2">
+                                    <div className="flex items-center my-8">
                                         <img src={article.author.image} alt={article.author.username} className="w-14 h-14 rounded-full object-cover"/>
                                         <div className="ml-4">
-                                            <h5 className="text-red-500 font-bold text-xl">{article.author.username}</h5>
+                                            < Link to={`profiles/${article.author.username}`}>
+                                                <h5 className="text-red-500 font-bold text-xl">{article.author.username}</h5>
+                                            </Link>
                                             <h6>{getDate(article.createdAt)}</h6>
                                         </div>
                                     </div>

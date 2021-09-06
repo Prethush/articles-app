@@ -17,7 +17,7 @@ function Header(props) {
                 <nav>
                     <ul className="flex">
                       {
-                          props.isLoggedIn ? < Authenticated user = {props.user.username} handleLogout={handleLogout}/> : < Unauthenticated />
+                          props.isLoggedIn ? < Authenticated user = {props.user} handleLogout={handleLogout}/> : < Unauthenticated />
                       } 
                     </ul>
                 </nav>
@@ -28,10 +28,13 @@ function Header(props) {
 function Authenticated(props) {
     return (
         <>
-            <Link to="">
+            <Link to={{
+                user: props.user,
+                pathname: `/profiles/${props.user.username}`
+                }}>
                 <li className="flex items-center text-xl mx-3">
                     <i className="fas fa-user mr-2"></i>
-                    <span className="">{props.user}</span>
+                    <span className="">{props.user.username}</span>
                 </li>
             </Link>
             <Link to="/settings">
@@ -44,11 +47,6 @@ function Authenticated(props) {
                 <li className="text-xl mx-3">
                     <i className="fas fa-newspaper mr-2"></i>
                     <span className="">New Article</span>
-                </li>
-            </Link>
-             <Link to={`/profiles/${props.user.username}`}>
-                <li className="text-xl mx-3">
-                    <span className="">Profile</span>
                 </li>
             </Link>
            <li className="text-xl">
