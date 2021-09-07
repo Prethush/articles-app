@@ -1,6 +1,7 @@
 import React from "react";
 import { articlesURL } from "../utils/constant";
 import Loader from "./Loader";
+import {withRouter} from "react-router-dom";
 
 class Article extends React.Component{
     constructor(props){
@@ -79,4 +80,4 @@ class Article extends React.Component{
     }
 }
 
-export default Article;
+export default withRouter(Article);

@@ -88,7 +88,9 @@ class App extends React.Component{
             < Route path="/" exact>
                 < Main {...props} />
             </Route>
-            < Route path="/articles/:slug" component={Article} />
+            < Route path="/articles/:slug">
+                < Article />
+            </Route>
             < Route path="/register">
                 < Signup handleUser = {props.handleUser}/>
             </Route>
@@ -115,7 +117,9 @@ class App extends React.Component{
             < Route path="/articles" exact>
                 < Main {...props} />
             </Route>
-            < Route path="/articles/:slug" component={Article} />
+            < Route path="/articles/:slug">
+                < Article />
+            </Route>
             < Route path="/addArticle">
                 < NewArticle />
             </Route>

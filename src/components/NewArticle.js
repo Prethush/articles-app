@@ -22,13 +22,12 @@ class NewArticle extends React.Component {
 
     handleSubmit = (event) => {
         let {title, description, body, tags, error} = this.state;
-        tags = tags.split(",").map(tag => tag.trim());
         let token = "Bearer " + localStorage.token;
         event.preventDefault();
         if(title && description && body && tags){
            fetch(articlesURL, {
                method: "POST",
-                body: JSON.stringify({ article: {title, description, body, tagList: tags}}),
+                body: JSON.stringify({ article: {title, description, body, tagList: tags.split(",").map(tag => tag.trim())}}),
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": token
