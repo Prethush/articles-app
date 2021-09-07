@@ -13,6 +13,7 @@ import FullPageLoader from "./FullPageLoader";
 import NewArticle from "./NewArticle";
 import Settings from "./Settings";
 import Profile from "./Profile";
+import UpdateArticle from "./UpdateArticle";
 
 class App extends React.Component{
        
@@ -89,7 +90,7 @@ class App extends React.Component{
                 < Main {...props} />
             </Route>
             < Route path="/articles/:slug">
-                < Article />
+                < Article {...props}/>
             </Route>
             < Route path="/register">
                 < Signup handleUser = {props.handleUser}/>
@@ -114,11 +115,16 @@ class App extends React.Component{
             < Route path="/" exact>
                 < Main {...props} />
             </Route>
+           
             < Route path="/articles" exact>
                 < Main {...props} />
             </Route>
+            < Route path="/articles/edit/:slug">
+                < UpdateArticle />
+            </Route>
+           
             < Route path="/articles/:slug">
-                < Article />
+                < Article {...props}/>
             </Route>
             < Route path="/addArticle">
                 < NewArticle />
@@ -127,8 +133,9 @@ class App extends React.Component{
                 < Settings user={props.user} handleUser={props.handleUser}/>
             </Route>
             < Route path="/profiles/:id">
-                < Profile user={props.user}/>
+                < Profile user={props.user} isLoggedIn={props.isLoggedIn}/>
             </Route>
+           
             < Route path="*">
                 < Nomatch />
             </Route>
