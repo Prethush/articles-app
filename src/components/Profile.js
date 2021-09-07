@@ -122,10 +122,18 @@ class Profile extends React.Component {
                 "Authorization": "Token " + localStorage.token
             }
         })
-        .then((res) => res.json())
+        .then((res) => {
+            if(!res.ok) {
+                return res.json().then(({errors}) => {
+                    return Promise.reject(errors);
+                })  
+            }
+            return res.json();
+        })
         .then((data) => {
             this.getArticles();
         })
+        .catch((err) => console.log(err));
     }
 
     render() {

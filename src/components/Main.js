@@ -6,7 +6,6 @@ import Pagination from "./Pagination";
 
 
 class Main extends React.Component {
-   
         constructor(props) {
             super();
             this.state = {
@@ -20,7 +19,6 @@ class Main extends React.Component {
             }
         }
     
-
     componentDidMount() {
        
        if(this.props.isLoggedIn) {
@@ -42,7 +40,7 @@ class Main extends React.Component {
         let offset = (this.state.activePage - 1) * 10;
         let {feedSelected, tagSelected} = this.state;
         let tag = tagSelected;
-        let url = feedSelected === "myfeed" ?  feedURL + `?limit=${this.state.articlesPerPage}&offset=${offset}` : articlesURL + `/?limit=${this.state.articlesPerPage}&offset=${offset}` + (tag && `&tag=${tag}`);
+        let url = feedSelected === "myfeed" ?  feedURL + `?limit=${this.state.articlesPerPage}&offset=${offset}` : articlesURL + `?limit=${this.state.articlesPerPage}&offset=${offset}` + (tag && `&tag=${tag}`);
         fetch(url, {
             method: "GET",
             headers: {
@@ -69,27 +67,31 @@ class Main extends React.Component {
         this.setState({tagSelected: value, activePage: 1, feedSelected: ""}, this.getArticles);
     }
 
-    handleFavoriteList = () => {
-       
+
+    handleFavorite = ({target}) => {
+        let {id, slug} = target.dataset;
+        let method = id === "false" ? "POST" : "DELETE";
+        console.log(method);
+        console.log(id, slug);
+        fetch(articlesURL + "/" + slug + "/favorite", {
+            method: method,
+            headers: {
+                "Authorization": "Token " + localStorage.token
+            }
+        })
+        .then((res) => {
+            if(!res.ok) {
+                return res.json().then(({errors}) => {
+                    return Promise.reject(errors);
+                })  
+            }
+            return res.json();
+        })
+        .then((data) => {
+            this.getArticles();
+        })
+        .catch((err) => console.log(err));
     }
-
-
-        handleFavorite = ({target}) => {
-            let {id, slug} = target.dataset;
-            let method = id === "false" ? "POST" : "DELETE";
-            console.log(method);
-            console.log(id, slug);
-            fetch(articlesURL + "/" + slug + "/favorite", {
-                method: method,
-                headers: {
-                    "Authorization": "Token " + localStorage.token
-                }
-            })
-            .then((res) => res.json())
-            .then((data) => {
-                this.getArticles();
-            })
-        }
 
     render() {
         let {articles, error, articlesCount, articlesPerPage, activePage, feedSelected, tagSelected} = this.state;
