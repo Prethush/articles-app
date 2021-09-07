@@ -1,8 +1,9 @@
 import React from "react";
 import { articlesURL } from "../utils/constant";
 import {withRouter} from "react-router-dom";
+import Loader from "./Loader";
 
-class NewArticle extends React.Component {
+class UpdateArticle extends React.Component {
 
     constructor(props) {
         super();
@@ -15,6 +16,28 @@ class NewArticle extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.getArticle();
+    }
+
+    getArticle = () => {
+        fetch(articlesURL + `/${this.props.match.params.slug}`)
+        .then((res) => {
+            if(!res.ok)  {
+                throw new Error(res.statusText);
+            }
+            return res.json();
+        })
+        .then(({article}) => {
+            
+            let {title, description, tagList, body} = article;
+            this.setState({title, body, description, tags: tagList.join(",")});
+        })
+        .catch((err) => {
+           console.log(err);
+        });
+    }
+
     handleChange = ({target}) => {
         let {name, value} = target;
         this.setState({[name]: value});
@@ -25,8 +48,8 @@ class NewArticle extends React.Component {
         let token = "Bearer " + localStorage.token;
         event.preventDefault();
         if(title && description && body && tags){
-           fetch(articlesURL, {
-               method: "POST",
+           fetch(articlesURL + "/" + this.props.match.params.slug, {
+               method: "PUT",
                 body: JSON.stringify({ article: {title, description, body, tagList: tags.split(",").map(tag => tag.trim())}}),
                 headers: {
                     "Content-Type": "application/json",
@@ -43,11 +66,10 @@ class NewArticle extends React.Component {
             }
            )
            .then((data) => {
-               this.props.history.push("/");
+               this.props.history.push(`/articles/${this.props.match.params.slug}`);
            })
            .catch((err) => {
                console.log(err);
-               this.setState({title: "", description: "", body: "", tags: "", error: ""})
            })
         }else {
             this.setState({title: "", description: "", body: "", tags: "", error: "Enter all fields"});
@@ -56,18 +78,21 @@ class NewArticle extends React.Component {
 
     render() {
         let {title, description, body, tags, error} = this.state;
+        if(!title || !description || !body || !tags) {
+            return < Loader />
+        }
         return (
            <main>
                <section className="pt-20">
                    <form className="w-1/2 mx-auto p-8 border border-gray-400 rounded-md" onSubmit={this.handleSubmit}>
-                        <legend className="text-3xl text-center font-bold my-3">Add Article</legend>
+                        <legend className="text-3xl text-center font-bold my-3">Update Article</legend>
                         <fieldset className="flex flex-col">
                             <span className="text-red-500 my-1">{error}</span>
                             <input type="text" value={title} placeholder="Title" name="title" onChange={this.handleChange} className="my-2 p-2 rounded-md outline-none border-2 border-gray-300 focus:border-blue-500"/>
                             <input type="text" value={description} name="description" placeholder="Description" onChange={this.handleChange} className="my-2 p-2 rounded-md outline-none border-2 border-gray-300 focus:border-blue-500"/>
                             <textarea rows="6" value={body} name="body" placeholder="Articles's Body" onChange={this.handleChange} className="my-2 p-2 rounded-md outline-none border-2 border-gray-300 focus:border-blue-500"></textarea>
                             <input type="text" value={tags} name="tags" placeholder="Tag List(comma seperated)" onChange={this.handleChange} className="my-2 p-2 rounded-md outline-none border-2 border-gray-300 focus:border-blue-500"/>
-                            <input type="submit" value="Add Article" className="my-2 p-2 rounded-md outline-none bg-blue-500 hover:bg-blue-400 text-white "/>
+                            <input type="submit" value="Update Article" className="my-2 p-2 rounded-md outline-none bg-blue-500 hover:bg-blue-400 text-white "/>
                         </fieldset>
                    </form>
                </section>
@@ -76,4 +101,4 @@ class NewArticle extends React.Component {
     }
 }
 
-export default withRouter(NewArticle);
+export default withRouter(UpdateArticle);

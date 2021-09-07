@@ -24,7 +24,7 @@ class Main extends React.Component {
     componentDidMount() {
        
        if(this.props.isLoggedIn) {
-           this.setState({feedSelected: "myfeed"}, this.myFeed);
+           this.setState({feedSelected: "myfeed"}, this.getArticles);
        }else {
            this.setState({feedSelected: "global"}, this.getArticles);
        }
@@ -37,11 +37,18 @@ class Main extends React.Component {
         this.setState({activePage: id}, this.getArticles);
     }
 
+
     getArticles = () => {
         let offset = (this.state.activePage - 1) * 10;
-        let tag = this.state.tagSelected;
-        
-        fetch(articlesURL + `/?limit=${this.state.articlesPerPage}&offset=${offset}` + (tag && `&tag=${tag}`))
+        let {feedSelected, tagSelected} = this.state;
+        let tag = tagSelected;
+        let url = feedSelected === "myfeed" ?  feedURL + `?limit=${this.state.articlesPerPage}&offset=${offset}` : articlesURL + `/?limit=${this.state.articlesPerPage}&offset=${offset}` + (tag && `&tag=${tag}`);
+        fetch(url, {
+            method: "GET",
+            headers: {
+                "Authorization": "Token " + localStorage.token
+            }
+        })
         .then((res) => {
             if(!res.ok)  {
                 throw new Error(res.statusText);
@@ -62,31 +69,27 @@ class Main extends React.Component {
         this.setState({tagSelected: value, activePage: 1, feedSelected: ""}, this.getArticles);
     }
 
-    myFeed = () => {
-        
-        let offset = (this.state.activePage - 1) * 10;
-        let token = localStorage.token;
-            let bearer = "Bearer " + token;
-            fetch(feedURL + `?/limit=${this.state.activePage}&skip=${offset}`, {
-                method: "GET",
+    handleFavoriteList = () => {
+       
+    }
+
+
+        handleFavorite = ({target}) => {
+            let {id, slug} = target.dataset;
+            let method = id === "false" ? "POST" : "DELETE";
+            console.log(method);
+            console.log(id, slug);
+            fetch(articlesURL + "/" + slug + "/favorite", {
+                method: method,
                 headers: {
-                    "Authorization": bearer,
+                    "Authorization": "Token " + localStorage.token
                 }
             })
-            .then((res) => {
-                if(!res.ok) {
-                    throw new Error(res.statusText);
-                }
-                return res.json();
+            .then((res) => res.json())
+            .then((data) => {
+                this.getArticles();
             })
-            .then((data) => 
-            {   
-                this.setState({articles: data.articles, articlesCount: data.articlesCount, feedSelected: "myfeed", tagSelected: ""})
-            })
-            
-            .catch((err) => this.setState({error: "Not able to fetch Articles"}));
-        
-         }
+        }
 
     render() {
         let {articles, error, articlesCount, articlesPerPage, activePage, feedSelected, tagSelected} = this.state;
@@ -98,7 +101,7 @@ class Main extends React.Component {
                     {/* feeds part */}
                         <div className="flex mb-3">
                             <span className={!this.props.isLoggedIn?  "hidden": feedSelected === "myfeed" ? "text-xl mr-8 cursor-pointer text-green-500 pb-2 border-b-2 border-green-500": "text-xl mr-8 cursor-pointer green"}  onClick={() => {
-                                this.setState({activePage: 1}, this.myFeed)
+                                this.setState({activePage: 1, feedSelected: "myfeed"}, this.getArticles)
                             }}> <i className="fas fa-newspaper mr-2"></i>
                                 My feed
                             </span>
@@ -119,7 +122,7 @@ class Main extends React.Component {
                         {/* articles part */}
                         <section className="flex justify-between ">
                             <div className="flex-70">
-                                < Articles articles={articles} error={error} />
+                                < Articles articles={articles} error={error} isLoggedIn={this.props.isLoggedIn}  handleFavorite = {this.handleFavorite}/>
                             </div>
 
                         {/* tags part */}
