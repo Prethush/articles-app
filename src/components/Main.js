@@ -141,7 +141,7 @@ class Main extends React.Component {
                         </div>
                             
                         {/* page indicator */}
-                        <div className="text-center py-8">
+                        <div className="text-center pt-4 py-6">
                             < Pagination 
                             articlesCount={articlesCount} 
                             articlesPerPage={articlesPerPage}

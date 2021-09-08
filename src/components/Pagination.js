@@ -17,7 +17,8 @@ function Pagination(props) {
         <>
             {
                 arr.length > 1 && arr.map((p, i) => {
-                    return <span key={p} className={Number(activePage) ===  i + 1 ? "bg-black text-white py-2 px-4 mx-4 cursor-pointer": "border border-gray-300 py-2 px-4 mx-4 cursor-pointer"} data-id={i+1} onClick={(e) => props.handleClick(e)}>{p}</span>
+                    return <span key={p} className={Number(activePage) ===  i + 1 ? "bg-black text-white py-2 px-4 mx-4 cursor-pointer": "border border-gray-300 py-2 px-4 mx-4 cursor-pointer"} data-id={i+1} onClick={(e) => props.handleClick(e)}>{p}</span> 
+                
                 }) 
             }
         </>
