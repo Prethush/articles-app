@@ -32461,13 +32461,17 @@ video {
   content: none;
 }
 
+body {
+  color: rgb(51,51,51);
+}
+
 input[type="submit"]:disabled {
   background-color:lightblue;
   cursor: auto;
 }
 
-body {
-  color: rgb(51,51,51);
+.active {
+  color: "red";
 }
 
 @media (min-width: 640px){
