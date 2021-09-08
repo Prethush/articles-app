@@ -1,5 +1,3 @@
-# articles-app
-https://blog-app-kt.netlify.app/
 
 # Getting Started with Create React App
 
