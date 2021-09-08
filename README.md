@@ -1,1 +1,1 @@
-ArticleS App
+Articles App
