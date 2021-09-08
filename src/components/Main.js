@@ -3,7 +3,7 @@ import Articles from "./Articles";
 import Tags from "./Tags";
 import {articlesURL, feedURL}  from "../utils/constant";
 import Pagination from "./Pagination";
-
+import BannerHomePage from "./BannerHomePage";
 
 class Main extends React.Component {
         constructor(props) {
@@ -100,12 +100,15 @@ class Main extends React.Component {
         return (
             
             // Hero section
-                <main className="px-24 py-16">
-
-                    {/* feeds part */}
+                <main>
+                    {
+                        !this.props.isLoggedIn ? < BannerHomePage /> : ""
+                    }
+                   <section className="px-28 py-12">
+                        {/* feeds part */}
                         <div className="flex mb-3">
                             <span className={!this.props.isLoggedIn?  "hidden": feedSelected === "myfeed" ? "text-xl mr-8 cursor-pointer text-green-500 pb-2 border-b-2 border-green-500": "text-xl mr-8 cursor-pointer green"}  onClick={() => {
-                                this.setState({activePage: 1, feedSelected: "myfeed"}, this.getArticles)
+                                this.setState({activePage: 1, feedSelected: "myfeed", tagSelected: ""}, this.getArticles)
                             }}> <i className="fas fa-newspaper mr-2"></i>
                                 My feed
                             </span>
@@ -123,8 +126,10 @@ class Main extends React.Component {
                             </div>
                         </div>
 
-                        {/* articles part */}
-                        <section className="flex justify-between ">
+                       
+                        <div className="flex justify-between py-8">
+
+                             {/* articles part */}
                             <div className="flex-70">
                                 < Articles articles={articles} error={error} isLoggedIn={this.props.isLoggedIn}  handleFavorite = {this.handleFavorite}/>
                             </div>
@@ -133,7 +138,7 @@ class Main extends React.Component {
                             <div className="flex-25">
                                 < Tags selectTag={this.selectTag} {...this.state}/>
                             </div>
-                        </section>
+                        </div>
                             
                         {/* page indicator */}
                         <div className="text-center py-8">
@@ -144,6 +149,7 @@ class Main extends React.Component {
                             handleClick = {this.handleClick}
                             />
                         </div>
+                   </section>
                 </main>
         )
     }

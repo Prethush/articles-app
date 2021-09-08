@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Autour+One&family=Pacifico&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
 @import url('https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 /*! tailwindcss v2.2.9 | MIT License | https://tailwindcss.com */
@@ -22478,8 +22482,16 @@ video {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
-.font-logo{
+.font-primary{
+  font-family: Pacifico;
+}
+
+.font-secondary{
   font-family: Lobster Two;
+}
+
+.font-tertiary{
+  font-family: Autour One;
 }
 
 .text-xs{
@@ -32461,13 +32473,18 @@ video {
   content: none;
 }
 
+body {
+  color: rgb(51,51,51);
+}
+
 input[type="submit"]:disabled {
   background-color:lightblue;
   cursor: auto;
 }
 
-body {
-  color: rgb(51,51,51);
+.active {
+  color: #10B981;
+  font-weight: 700;
 }
 
 @media (min-width: 640px){
@@ -54274,8 +54291,16 @@ body {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
-  .sm\:font-logo{
+  .sm\:font-primary{
+    font-family: Pacifico;
+  }
+
+  .sm\:font-secondary{
     font-family: Lobster Two;
+  }
+
+  .sm\:font-tertiary{
+    font-family: Autour One;
   }
 
   .sm\:text-xs{
@@ -85705,8 +85730,16 @@ body {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
-  .md\:font-logo{
+  .md\:font-primary{
+    font-family: Pacifico;
+  }
+
+  .md\:font-secondary{
     font-family: Lobster Two;
+  }
+
+  .md\:font-tertiary{
+    font-family: Autour One;
   }
 
   .md\:text-xs{
@@ -117136,8 +117169,16 @@ body {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
-  .lg\:font-logo{
+  .lg\:font-primary{
+    font-family: Pacifico;
+  }
+
+  .lg\:font-secondary{
     font-family: Lobster Two;
+  }
+
+  .lg\:font-tertiary{
+    font-family: Autour One;
   }
 
   .lg\:text-xs{
@@ -148567,8 +148608,16 @@ body {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
-  .xl\:font-logo{
+  .xl\:font-primary{
+    font-family: Pacifico;
+  }
+
+  .xl\:font-secondary{
     font-family: Lobster Two;
+  }
+
+  .xl\:font-tertiary{
+    font-family: Autour One;
   }
 
   .xl\:text-xs{
@@ -179998,8 +180047,16 @@ body {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
-  .\32xl\:font-logo{
+  .\32xl\:font-primary{
+    font-family: Pacifico;
+  }
+
+  .\32xl\:font-secondary{
     font-family: Lobster Two;
+  }
+
+  .\32xl\:font-tertiary{
+    font-family: Autour One;
   }
 
   .\32xl\:text-xs{

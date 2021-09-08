@@ -8,7 +8,9 @@ module.exports = {
         25: "0 1 25%"
       },
       fontFamily: {
-        "logo": ["Lobster Two"]
+        primary: ["Pacifico"],
+        secondary: ["Lobster Two"],
+        tertiary: ["Autour One"]
       },
       colors: {
         articlePage: "rgb(51,51,51)"
