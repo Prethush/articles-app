@@ -28,7 +28,7 @@ class Profile extends React.Component {
 
     getUserInfo = () => {
         let {id} = this.props.match.params;
-        fetch(profileURL + id, {
+        fetch(profileURL + id , {
             method: "GET",
             headers: {
                 "Authorization": "Bearer " + localStorage.token

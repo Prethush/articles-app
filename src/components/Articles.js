@@ -35,9 +35,11 @@ function Articles(props){
                                         <div className="flex items-center my-8">
                                             <img src={article.author.image} alt={article.author.username} className="w-14 h-14 rounded-full object-cover"/>
                                             <div className="ml-4">
-                                                < Link to={`profiles/${article.author.username}`}>
+                                                {
+                                                    props.isLoggedIn ? < Link to={`/profiles/${article.author.username}`}>
                                                     <h5 className="text-red-500 font-bold text-xl">{article.author.username}</h5>
-                                                </Link>
+                                                    </Link> : <h5 className="text-red-500 font-bold text-xl">{article.author.username}</h5>
+                                                }
                                                 <h6>{getDate(article.createdAt)}</h6>
                                             </div>
                                         </div>
