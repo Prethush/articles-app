@@ -156,7 +156,7 @@ class Profile extends React.Component {
                     </div>
 
                     <article className="px-40">
-                        <div className="py-6">
+                        <div className="py-12">
                             <span className={feedSelected === "author" ? "cursor-pointer text-xl text-green-500 pb-2 border-b-2 border-green-500": "cursor-pointer text-xl"}onClick={() => this.setState({
                                 feedSelected: "author",
                                 activePage: 1
