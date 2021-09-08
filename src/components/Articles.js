@@ -30,7 +30,7 @@ function Articles(props){
                     {
                         articles.map(article => {
                             return (
-                                <div key={article.slug} className="bg-gray-100 shadow-custom flex justify-between my-8  w-full p-4 rounded-md">
+                                <div key={article.slug} className="bg-gray-100 shadow-custom flex justify-between mb-12 w-full p-4 rounded-md">
                                     <div>
                                         <div className="flex items-center my-8">
                                             <img src={article.author.image} alt={article.author.username} className="w-14 h-14 rounded-full object-cover"/>
@@ -43,7 +43,7 @@ function Articles(props){
                                         </div>
                                         <h2 className="text-2xl font-bold mb-2">{article.title}</h2>
                                         <Link to={`/articles/${article.slug}`}>
-                                            <h4 className="bg-green-400 text-white font-bold rounded-lg inline-block py-2 px-3">Read More</h4>
+                                            <h4 className="bg-green-400 text-white font-bold rounded-lg inline-block py-1 px-3 text-sm">Read More</h4>
                                         </Link>
                                     </div>
                                     <div className="flex items-center text-xl">

@@ -1,19 +1,10 @@
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import Main from "./Main";
+import {BrowserRouter as Router} from "react-router-dom";
 import Header from "./Header";
-// import Home from "./Home";
-import Signup from "./Signup";
-import Signin from "./Signin";
-import Article from "./Article";
-import Nomatch from "./Nomatch";
-// import Dashboard from "./Dashboard";
 import React from "react";
 import { userURL } from "../utils/constant";
 import FullPageLoader from "./FullPageLoader";
-import NewArticle from "./NewArticle";
-import Settings from "./Settings";
-import Profile from "./Profile";
-import UpdateArticle from "./UpdateArticle";
+import AuthenticatedApp from "./AuthenticatedApp";
+import UnauthenticatedApp from "./UnauthenticatedApp";
 
 class App extends React.Component{
        
@@ -79,68 +70,7 @@ class App extends React.Component{
         }
     }
 
-    function UnauthenticatedApp(props) {
-        
-        return (
-            < Switch >
-            {/* < Route path="/" exact>
-                < Home />
-            </Route> */}
-            < Route path="/" exact>
-                < Main {...props} />
-            </Route>
-            < Route path="/articles/:slug">
-                < Article {...props}/>
-            </Route>
-            < Route path="/register">
-                < Signup handleUser = {props.handleUser}/>
-            </Route>
-            < Route path="/login">
-                < Signin handleUser={props.handleUser} />
-            </Route>
-            < Route path="*">
-                < Nomatch />
-            </Route>
-        </Switch>
-        )
-    }
+    
 
-    function AuthenticatedApp(props) {
-        
-        return (
-        < Switch >
-            {/* < Route path="/dashboar">
-                < Dashboard {...props}/>
-            </Route> */}
-            < Route path="/" exact>
-                < Main {...props} />
-            </Route>
-           
-            < Route path="/articles" exact>
-                < Main {...props} />
-            </Route>
-            < Route path="/articles/edit/:slug">
-                < UpdateArticle />
-            </Route>
-           
-            < Route path="/articles/:slug">
-                < Article {...props}/>
-            </Route>
-            < Route path="/addArticle">
-                < NewArticle />
-            </Route>
-            < Route path="/settings">
-                < Settings user={props.user} handleUser={props.handleUser}/>
-            </Route>
-            < Route path="/profiles/:id">
-                < Profile user={props.user} isLoggedIn={props.isLoggedIn}/>
-            </Route>
-           
-            < Route path="*">
-                < Nomatch />
-            </Route>
-        </Switch>
-        )
-    }
-
+    
 export default App;

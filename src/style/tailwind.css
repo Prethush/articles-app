@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Autour+One&family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @tailwind base;
 @tailwind components;
@@ -13,5 +15,6 @@ input[type="submit"]:disabled {
 }
 
 .active {
-    color: "red";
+    color: #10B981;
+    font-weight: 700;
 }

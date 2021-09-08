@@ -10,9 +10,9 @@ function Header(props) {
      
     return (
        
-        <header className="flex justify-between bg-gray-300 px-20 py-8 items-center">
+        <header className="flex justify-between bg-gray-100 px-20 py-8 items-center">
                 < NavLink to="/">
-                        <h1 className="text-4xl font-extrabold text-green-500 font-logo">Blog App</h1>
+                        <h1 className="text-4xl font-bold text-green-500 font-tertiary">Blog App</h1>
                 </NavLink>
                 <nav>
                     <ul className="flex">
@@ -28,10 +28,7 @@ function Header(props) {
 function Authenticated(props) {
     return (
         <>
-            <NavLink activeClassName="active" to={{
-                user: props.user,
-                pathname: `/profiles/${props.user.username}`
-                }}>
+            <NavLink activeClassName="active" to={`/profiles/${props.user.username}`}>
                 <li className="flex items-center text-xl mx-3 ">
                     <i className="fas fa-user mr-2"></i>
                     <span className="">{props.user.username}</span>
@@ -52,7 +49,7 @@ function Authenticated(props) {
                 </li>
             </NavLink>
 
-           <li className="text-xl">
+           <li className="text-xl mx-3">
                <span className="cursor-pointer" onClick={props.handleLogout}>Logout</span>
            </li>
         </>
@@ -62,11 +59,11 @@ function Authenticated(props) {
 function Unauthenticated(props) {
     return (
         <>
-              < NavLink to="/register">
-                    <li className="bg-blue-500 py-3 px-4 text-white font-bold rounded-lg mr-6">Sign up</li>
+              < NavLink activeClassName="active" to="/register">
+                    <li className="text-xl mr-6">Sign up</li>
              </NavLink>
-             < NavLink to="/login">
-                    <li className="bg-blue-500 py-3 px-4 text-white font-bold rounded-lg mr-6">Log in</li>
+             < NavLink activeClassName="active" to="/login">
+                    <li className="text-xl mr-6">Log in</li>
             </NavLink>
 
         </>
