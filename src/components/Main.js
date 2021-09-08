@@ -73,24 +73,26 @@ class Main extends React.Component {
         let method = id === "false" ? "POST" : "DELETE";
         console.log(method);
         console.log(id, slug);
-        fetch(articlesURL + "/" + slug + "/favorite", {
-            method: method,
-            headers: {
-                "Authorization": "Token " + localStorage.token
-            }
-        })
-        .then((res) => {
-            if(!res.ok) {
-                return res.json().then(({errors}) => {
-                    return Promise.reject(errors);
-                })  
-            }
-            return res.json();
-        })
-        .then((data) => {
-            this.getArticles();
-        })
-        .catch((err) => console.log(err));
+        if(this.props.isLoggedIn) {
+            fetch(articlesURL + "/" + slug + "/favorite", {
+                method: method,
+                headers: {
+                    "Authorization": "Token " + localStorage.token
+                }
+            })
+            .then((res) => {
+                if(!res.ok) {
+                    return res.json().then(({errors}) => {
+                        return Promise.reject(errors);
+                    })  
+                }
+                return res.json();
+            })
+            .then((data) => {
+                this.getArticles();
+            })
+            .catch((err) => console.log(err));
+        }
     }
 
     render() {

@@ -51,6 +51,26 @@ class CommentBox extends React.Component {
         }
     }
 
+    handleDelete = ({target}) => {
+        let {id} = target.dataset;
+        console.log(typeof id);
+        let slug = this.props.slug;
+        fetch(articlesURL + "/" + slug + "/comments/" + id, {
+            method: "DELETE",
+            headers: {
+                "Authorization": "Token " + localStorage.token
+            }
+        })
+        .then((res) => {
+            if(!res.ok) {
+                return res.json().then(({errors}) => {
+                    return Promise.reject(errors);
+                })
+            }
+            this.setState({comments: ""}, this.getComments);
+        })
+        .catch((err) => console.log(err));
+    }
     
     getComments = () => {
         let slug = this.props.slug;
@@ -84,7 +104,7 @@ class CommentBox extends React.Component {
                             </form>
                         </div>
                         <div className="my-8">
-                            < Comments  loggedInUser = {loggedInUser} comments = {comments} isLoggedIn = {this.props.isLoggedIn}/>
+                            < Comments  loggedInUser = {loggedInUser} comments = {comments} isLoggedIn = {this.props.isLoggedIn} handleDelete={this.handleDelete}/>
                         </div>
                     </>
                 )

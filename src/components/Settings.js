@@ -8,11 +8,11 @@ class Settings extends React.Component {
     constructor(props) {
         super();
         this.state = {
-            image: "",
+            image: props.user.image,
             username: props.user.username,
             email: props.user.email,
             passwd: "",
-            bio: "",
+            bio: props.user.bio,
             errors: {
                 username: "",
                 email: "", 
