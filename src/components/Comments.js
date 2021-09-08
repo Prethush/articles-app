@@ -2,7 +2,6 @@ import Loader from "./Loader";
 
 function Comments(props) {
 
-    console.log(props);
     function getDate(date){
         let newDate =  new Date(date).toISOString().split('T')[0];
          return newDate;
@@ -25,8 +24,8 @@ function Comments(props) {
                             <div className="flex items-center">
                                     <h4 className="text-xl ml-6">{comment.author.username}</h4>
                                     <h4 className="text-xl ml-6">#{getDate(comment.createdAt)}</h4>
-                                    <span className={(loggedInUser === comment.author.username) && isLoggedIn ? "absolute right-4 text-xl" : "hidden"}>
-                                        <i className="fas fa-trash cursor-pointer"></i>
+                                    <span className={(loggedInUser === comment.author.username) && isLoggedIn ? "absolute right-4 text-xl" : "hidden"} >
+                                        <i className="fas fa-trash cursor-pointer text-red-500" data-id={comment.id} onClick={(e) => props.handleDelete(e)}></i>
                                     </span>
                                 </div>
                                 <p className="ml-6 my-4">{comment.body}</p>

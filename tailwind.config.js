@@ -12,6 +12,9 @@ module.exports = {
       },
       colors: {
         articlePage: "rgb(51,51,51)"
+      },
+      boxShadow: {
+        custom: "32px 26px 20px -20px rgba(0,0,0,0.4)"
       }
 
     },

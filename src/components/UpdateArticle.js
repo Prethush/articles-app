@@ -8,6 +8,7 @@ class UpdateArticle extends React.Component {
     constructor(props) {
         super();
         this.state = {
+            article: "",
             title: "",
             description: "",
             body: "",
@@ -29,9 +30,8 @@ class UpdateArticle extends React.Component {
             return res.json();
         })
         .then(({article}) => {
-            
             let {title, description, tagList, body} = article;
-            this.setState({title, body, description, tags: tagList.join(",")});
+            this.setState({article, title, body, description, tags: tagList.join(",")});
         })
         .catch((err) => {
            console.log(err);
@@ -44,7 +44,7 @@ class UpdateArticle extends React.Component {
     }
 
     handleSubmit = (event) => {
-        let {title, description, body, tags, error} = this.state;
+        let {title, description, body, tags} = this.state;
         let token = "Bearer " + localStorage.token;
         event.preventDefault();
         if(title && description && body && tags){
@@ -72,13 +72,13 @@ class UpdateArticle extends React.Component {
                console.log(err);
            })
         }else {
-            this.setState({title: "", description: "", body: "", tags: "", error: "Enter all fields"});
+            this.setState({error: "Enter all fields"});
         }
     }
 
     render() {
-        let {title, description, body, tags, error} = this.state;
-        if(!title || !description || !body || !tags) {
+        let {title, description, body, tags, error, article} = this.state;
+        if(!article) {
             return < Loader />
         }
         return (

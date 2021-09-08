@@ -22,8 +22,7 @@ class Tags extends React.Component{
             return res.json();
         })
         .then(({tags}) => {
-            
-            this.setState({allTags: tags, error: ""});
+            this.setState({allTags: tags.filter(tag => Boolean(tag)), error: ""});
         })
         .catch((err) => {
             this.setState({error: "Not able to fetch Tags"});
@@ -43,9 +42,7 @@ class Tags extends React.Component{
             <div className="flex flex-wrap bg-gray-200 px-4 py-8 rounded-md">
                 {
                     allTags.map(tag => {
-                        if(tag){
                             return  <span key={tag} className={this.props.tagSelected === tag ? "bg-red-500 p-2 cursor-pointer text-white text-xs rounded-md mx-1 my-1" : "bg-gray-700 p-2 cursor-pointer text-white text-xs rounded-md mx-1 my-1"} onClick={(e) => this.props.selectTag(e)} data-value={tag}>{tag}</span>
-                        }
                     })
                 }
             </div>

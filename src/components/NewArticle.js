@@ -21,7 +21,7 @@ class NewArticle extends React.Component {
     }
 
     handleSubmit = (event) => {
-        let {title, description, body, tags, error} = this.state;
+        let {title, description, body, tags} = this.state;
         let token = "Bearer " + localStorage.token;
         event.preventDefault();
         if(title && description && body && tags){

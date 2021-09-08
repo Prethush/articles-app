@@ -30,7 +30,7 @@ function Articles(props){
                     {
                         articles.map(article => {
                             return (
-                                <div key={article.slug} className="bg-gray-200 flex justify-between my-8  w-full p-4 rounded-md">
+                                <div key={article.slug} className="bg-gray-100 shadow-custom flex justify-between my-8  w-full p-4 rounded-md">
                                     <div>
                                         <div className="flex items-center my-8">
                                             <img src={article.author.image} alt={article.author.username} className="w-14 h-14 rounded-full object-cover"/>
