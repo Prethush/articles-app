@@ -22,19 +22,12 @@ class Profile extends React.Component {
         }
     }
 
-    _isMounted = false;
 
     componentDidMount(){
-        this._isMounted = true;
-        console.log(this._isMounted, "mounted");
-        if(this._isMounted) {
-            this.getUserInfo();
-        }
+        this.getUserInfo();
+        
     }
 
-    componentWillUnmount() {
-        this._isMounted = false;
-    }
 
     getUserInfo = () => {
         let {id} = this.props.match.params;

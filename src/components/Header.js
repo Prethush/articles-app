@@ -10,12 +10,12 @@ function Header(props) {
      
     return (
        
-        <header className="flex justify-between bg-gray-100 px-20 py-8 items-center">
+        <header className="flex flex-col items-center py-6 sm:flex sm:flex-col sm:py-4 lg:flex lg:flex-row lg:justify-between  bg-gray-100 lg:px-20  sm:px-12 sm:items-center">
                 < NavLink to="/">
-                        <h1 className="text-4xl font-bold text-green-500 font-tertiary">Blog App</h1>
+                        <h1 className="text-3xl py-4 sm:text-3xl md:text-4xl font-bold text-green-500 font-tertiary">Blog App</h1>
                 </NavLink>
                 <nav>
-                    <ul className="flex">
+                    <ul className="flex flex-col text-xs sm:flex sm:flex-row">
                       {
                           props.isLoggedIn ? < Authenticated user = {props.user} handleLogout={handleLogout}/> : < Unauthenticated />
                       } 

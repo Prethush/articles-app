@@ -59,7 +59,7 @@ class NewArticle extends React.Component {
         return (
            <main>
                <section className="pt-20">
-                   <form className="w-1/2 mx-auto p-8 border border-gray-400 rounded-md" onSubmit={this.handleSubmit}>
+                   <form className="sm:mx-12 sm:w-full md:w-1/2 md:mx-auto p-6 md:p-8 border border-gray-400 rounded-md" onSubmit={this.handleSubmit}>
                         <legend className="text-3xl text-center font-bold my-3">Add Article</legend>
                         <fieldset className="flex flex-col">
                             <span className="text-red-500 my-1">{error}</span>

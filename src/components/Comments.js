@@ -15,7 +15,7 @@ function Comments(props) {
         <>
             {
                 comments.length > 0 ? comments.map((comment) => {
-                return  <div key={comment.createdAt} className="flex item-center p-6 bg-gray-100 mb-4 rounded-t-md relative">
+                return  <div key={comment.createdAt} className="flex item-center p-6 bg-gray-100 mb-8 relative shadow-custom rounded-md">
                             <div className="">
                                 <img src={comment.author.image} alt={comment.author.username} className="w-16 h-16 rounded-full"/>
                             

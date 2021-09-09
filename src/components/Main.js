@@ -20,22 +20,17 @@ class Main extends React.Component {
             }
         }
 
-        _isMounted = false;
+        
     
     componentDidMount() {
-       this._isMounted = true;
-       if(this._isMounted) {
             if(this.props.isLoggedIn) {
                 this.setState({feedSelected: "myfeed"}, this.getArticles);
             }else {
                 this.setState({feedSelected: "global"}, this.getArticles);
             }
-       } 
-    }
+       
+        }
 
-    componentWillUnmount() {
-        this._isMounted = false;
-    }
    
     handleClick = ({target}) => {
         let {id} = target.dataset;
