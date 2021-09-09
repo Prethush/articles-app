@@ -95,6 +95,8 @@ class Main extends React.Component {
         }
     }
 
+    
+
     render() {
         let {articles, error, articlesCount, articlesPerPage, activePage, feedSelected, tagSelected} = this.state;
         return (
