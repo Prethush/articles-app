@@ -3,8 +3,9 @@ import { tagsURL } from "../utils/constant";
 import Loader from "./Loader";
 
 class Tags extends React.Component{
-
+   
     constructor(props) {
+       
         super();
         this.state = {
             allTags: null,
@@ -12,21 +13,29 @@ class Tags extends React.Component{
         }
     }
 
+    _isMounted = false;
     componentDidMount() {
+        this._isMounted = true; 
+        if(this._isMounted) {
+            fetch(tagsURL)
+            .then((res) => {
+                if(!res.ok)  {
+                    throw new Error(res.statusText);
+                }
+                return res.json();
+            })
+            .then(({tags}) => {
+                this.setState({allTags: tags.filter(tag => Boolean(tag)), error: ""});
+            })
+            .catch((err) => {
+                this.setState({error: "Not able to fetch Tags"});
+            });
+        }
         
-        fetch(tagsURL)
-        .then((res) => {
-            if(!res.ok)  {
-                throw new Error(res.statusText);
-            }
-            return res.json();
-        })
-        .then(({tags}) => {
-            this.setState({allTags: tags.filter(tag => Boolean(tag)), error: ""});
-        })
-        .catch((err) => {
-            this.setState({error: "Not able to fetch Tags"});
-        });
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     render() {

@@ -6,6 +6,7 @@ import Pagination from "./Pagination";
 import BannerHomePage from "./BannerHomePage";
 
 class Main extends React.Component {
+       
         constructor(props) {
             super();
             this.state = {
@@ -18,17 +19,23 @@ class Main extends React.Component {
                 feedSelected: "",
             }
         }
+
+        _isMounted = false;
     
     componentDidMount() {
-       
-       if(this.props.isLoggedIn) {
-           this.setState({feedSelected: "myfeed"}, this.getArticles);
-       }else {
-           this.setState({feedSelected: "global"}, this.getArticles);
-       }
+       this._isMounted = true;
+       if(this._isMounted) {
+            if(this.props.isLoggedIn) {
+                this.setState({feedSelected: "myfeed"}, this.getArticles);
+            }else {
+                this.setState({feedSelected: "global"}, this.getArticles);
+            }
+       } 
     }
 
-    
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
    
     handleClick = ({target}) => {
         let {id} = target.dataset;

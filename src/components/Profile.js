@@ -7,7 +7,7 @@ import Pagination from "./Pagination";
 import {withRouter} from "react-router-dom";
 
 class Profile extends React.Component {
-
+    
     constructor(props) {
         super();
         this.state = {
@@ -22,8 +22,18 @@ class Profile extends React.Component {
         }
     }
 
+    _isMounted = false;
+
     componentDidMount(){
-       this.getUserInfo();
+        this._isMounted = true;
+        console.log(this._isMounted, "mounted");
+        if(this._isMounted) {
+            this.getUserInfo();
+        }
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     getUserInfo = () => {

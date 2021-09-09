@@ -17,32 +17,41 @@ class App extends React.Component{
         }
     }
 
+    _isMounted = false;
    componentDidMount(){
-      let token = localStorage.getItem("token");
-       if(token) {
-           let bearer = "Bearer " + token;
-           fetch(userURL, {
-               method: "GET",
-               headers: {
-                   "Authorization": bearer
-               }
-           })
-           .then((res) => {
-               if(!res.ok) {
-                   return res.json().then(({errors}) => {
-                       return Promise.reject(errors);
-                   }) 
-               }
-               return res.json();
-           })
-           .then((data) => {
-              
-               this.handleUser(data.user);
-           })
-           .catch((err) => console.log(err));
-       }else {
-           this.setState({loading: false});
+       this._isMounted = true;
+       if(this._isMounted) {
+            let token = localStorage.getItem("token");
+            if(token) {
+                let bearer = "Bearer " + token;
+                fetch(userURL, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": bearer
+                    }
+                })
+                .then((res) => {
+                    if(!res.ok) {
+                        return res.json().then(({errors}) => {
+                            return Promise.reject(errors);
+                        }) 
+                    }
+                    return res.json();
+                })
+                .then((data) => {
+                
+                    this.handleUser(data.user);
+                })
+                .catch((err) => console.log(err));
+            }else {
+                this.setState({loading: false});
+            }
        }
+      
+   }
+
+   componentWillUnmount() {
+       this._isMounted = false;
    }
 
         handleUser = (user) => {
