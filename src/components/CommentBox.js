@@ -98,7 +98,7 @@ class CommentBox extends React.Component {
         return (
                     <>
                         <div className={this.props.isLoggedIn ? "" : "hidden"}>
-                            <form className="my-6 flex flex-col" onSubmit={this.handleSubmit}>
+                            <form className="my-6 w-full" onSubmit={this.handleSubmit}>
                                 <textarea className="w-full border-2 border-gray-400 rounded-md p-3 outline-none focus:border-blue-500" rows="6" placeholder="Enter Comments" value={inputText} onChange={this.handleChange} name="inputText"></textarea>
                                 <input type="submit" value="Add Comment" className="bg-blue-500 w-min self-end my-4 py-2 px-4 text-white rounded-md cursor-pointer hover:bg-blue-400"/>
                             </form>
