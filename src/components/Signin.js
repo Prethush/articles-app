@@ -55,8 +55,8 @@ class Signin extends React.Component {
         
         return (
             <main>
-                <section className="mt-20">
-                    <form className="w-1/3 mx-auto border border-gray-400 p-6 rounded-md" onSubmit={this.handleSubmit}>
+                <section className="mt-20 px-8">
+                    <form className="w-full md:w-1/3 mx-auto border border-gray-400 p-6 rounded-md" onSubmit={this.handleSubmit}>
                         <div className="text-center">
                             <legend className="text-2xl font-bold">Sign In</legend>
                             < Link to="/register">

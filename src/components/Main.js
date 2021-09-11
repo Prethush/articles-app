@@ -108,15 +108,15 @@ class Main extends React.Component {
                     {
                         !this.props.isLoggedIn ? < BannerHomePage /> : ""
                     }
-                   <section className="px-28 py-12">
+                   <section className="px-8 py-12 lg:px-28 lg:py-12">
                         {/* feeds part */}
-                        <div className="flex mb-3">
-                            <span className={!this.props.isLoggedIn?  "hidden": feedSelected === "myfeed" ? "text-xl mr-8 cursor-pointer text-green-500 pb-2 border-b-2 border-green-500": "text-xl mr-8 cursor-pointer green"}  onClick={() => {
+                        <div className="flex mb-3 text-xs sm:text-lg lg:text-xl">
+                            <span className={!this.props.isLoggedIn?  "hidden": feedSelected === "myfeed" ? "mr-8 cursor-pointer text-green-500 pb-2 border-b-2 border-green-500": " mr-8 cursor-pointer green"}  onClick={() => {
                                 this.setState({activePage: 1, feedSelected: "myfeed", tagSelected: ""}, this.getArticles)
                             }}> <i className="fas fa-newspaper mr-2"></i>
                                 My feed
                             </span>
-                            <span className={feedSelected === "global" ? "cursor-pointer text-xl text-green-500 pb-2 border-b-2 border-green-500": "cursor-pointer text-xl"} onClick={() => this.setState({
+                            <span className={feedSelected === "global" ? "cursor-pointer text-green-500 pb-2 border-b-2 border-green-500": "cursor-pointer"} onClick={() => this.setState({
                                 tagSelected: "",
                                 feedSelected: "global",
                                 activePage: 1
@@ -124,28 +124,28 @@ class Main extends React.Component {
                                 <i className="fas fa-newspaper mr-2"></i>
                                 Global Feed 
                             </span>
-                            <div className={tagSelected ? "visible text-xl": "hidden"}>
+                            <div className={tagSelected ? "visible text-xs sm:text-lg lg:text-xl": "hidden"}>
                                 <span className="mx-4 text-gray-500">/</span>
                                 <span className="text-green-700 pb-2 border-b-2 border-green-700">#{this.state.tagSelected}</span>
                             </div>
                         </div>
 
                        
-                        <div className="flex justify-between py-8">
+                        <div className="flex flex-col lg:flex-row lg:justify-between py-8">
 
                              {/* articles part */}
-                            <div className="flex-70">
+                            <div className="flex-100 lg:flex-70">
                                 < Articles articles={articles} error={error} isLoggedIn={this.props.isLoggedIn}  handleFavorite = {this.handleFavorite}/>
                             </div>
 
                         {/* tags part */}
-                            <div className="flex-25">
+                            <div className="flex-100 lg:flex-25">
                                 < Tags selectTag={this.selectTag} {...this.state}/>
                             </div>
                         </div>
                             
                         {/* page indicator */}
-                        <div className="text-center pt-4 py-6">
+                        <div className="flex justify-center flex-wrap pt-4 py-6">
                             < Pagination 
                             articlesCount={articlesCount} 
                             articlesPerPage={articlesPerPage}

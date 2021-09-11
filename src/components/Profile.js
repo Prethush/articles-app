@@ -140,7 +140,6 @@ class Profile extends React.Component {
         }
         
 
-
     render() {
        
         if(!this.state.user) {
@@ -154,14 +153,14 @@ class Profile extends React.Component {
                 <section>
                     <div className="bg-articlePage text-white py-16 text-center">
                         <img src={image} alt={username} className="w-40 h-40 rounded-full mx-auto"/>
-                        <h2 className="text-5xl my-4">{username}</h2>
-                        <h3 className="text-2xl text-pink-300">{bio}</h3>
+                        <h2 className="text-2xl sm:text-3xl md:text-5xl my-4">{username}</h2>
+                        <h3 className="sm:text-lg md:text-2xl text-pink-300">{bio}</h3>
                         <button className={loggenInUser !== username ? "visible bg-white text-gray-700 px-8 py-3 rounded-md mt-6": "hidden"} onClick={this.handleFollow}>{following ? `Unfollow ${username}` : `Follow ${username}`} </button>
                     </div>
 
-                    <article className="px-40">
+                    <article className="px-8 sm:px-12 md:px-40">
                         <div className="py-12">
-                            <span className={feedSelected === "author" ? "cursor-pointer text-xl text-green-500 pb-2 border-b-2 border-green-500": "cursor-pointer text-xl"}onClick={() => this.setState({
+                            <span className={feedSelected === "author" ? "cursor-pointer text-md sm:text-xl text-green-500 pb-2 border-b-2 border-green-500": "cursor-pointer text-md sm:text-xl"}onClick={() => this.setState({
                                 feedSelected: "author",
                                 activePage: 1
                             }, this.getArticles)}>
@@ -169,7 +168,7 @@ class Profile extends React.Component {
                                 My Articles
                                 </span>
                             <span className="mx-4">/</span>
-                            <span className={feedSelected === "favorited" ? "cursor-pointer text-xl text-green-500 pb-2 border-b-2 border-green-500": "cursor-pointer text-xl"} onClick={() => this.setState({
+                            <span className={feedSelected === "favorited" ? "cursor-pointer text-md sm:text-xl text-green-500 pb-2 border-b-2 border-green-500": "cursor-pointer text-md sm:text-xl"} onClick={() => this.setState({
                                 feedSelected: "favorited",
                                 activePage: 1
                             }, this.getArticles)}> 

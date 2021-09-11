@@ -58,16 +58,21 @@ class NewArticle extends React.Component {
         let {title, description, body, tags, error} = this.state;
         return (
            <main>
-               <section className="pt-20">
-                   <form className="sm:mx-12 sm:w-full md:w-1/2 md:mx-auto p-6 md:p-8 border border-gray-400 rounded-md" onSubmit={this.handleSubmit}>
-                        <legend className="text-3xl text-center font-bold my-3">Add Article</legend>
-                        <fieldset className="flex flex-col">
+               <section className="pt-20 px-8">
+                   <form className="w-full md:w-1/2 md:mx-auto p-8 border border-gray-400 rounded-md" onSubmit={this.handleSubmit}>
+                        <legend className="text-2xl sm:text-3xl text-center font-bold my-3">Add Article</legend>
+                        <fieldset className="">
                             <span className="text-red-500 my-1">{error}</span>
-                            <input type="text" value={title} placeholder="Title" name="title" onChange={this.handleChange} className="my-2 p-2 rounded-md outline-none border-2 border-gray-300 focus:border-blue-500"/>
-                            <input type="text" value={description} name="description" placeholder="Description" onChange={this.handleChange} className="my-2 p-2 rounded-md outline-none border-2 border-gray-300 focus:border-blue-500"/>
-                            <textarea rows="6" value={body} name="body" placeholder="Articles's Body" onChange={this.handleChange} className="my-2 p-2 rounded-md outline-none border-2 border-gray-300 focus:border-blue-500"></textarea>
-                            <input type="text" value={tags} name="tags" placeholder="Tag List(comma seperated)" onChange={this.handleChange} className="my-2 p-2 rounded-md outline-none border-2 border-gray-300 focus:border-blue-500"/>
-                            <input type="submit" value="Add Article" className="my-2 p-2 rounded-md outline-none bg-blue-500 hover:bg-blue-400 text-white "/>
+
+                            <input type="text" value={title} placeholder="Title" name="title" onChange={this.handleChange} className="my-2 p-2 rounded-md outline-none border-2 border-gray-300 focus:border-blue-500 w-full"/>
+
+                            <input type="text" value={description} name="description" placeholder="Description" onChange={this.handleChange} className="my-2 p-2 rounded-md outline-none border-2 border-gray-300 focus:border-blue-500 w-full"/>
+
+                            <textarea rows="6" value={body} name="body" placeholder="Articles's Body" onChange={this.handleChange} className="my-2 p-2 rounded-md outline-none border-2 border-gray-300 focus:border-blue-500 w-full"></textarea>
+
+                            <input type="text" value={tags} name="tags" placeholder="Tag List(comma seperated)" onChange={this.handleChange} className="my-2 p-2 rounded-md outline-none border-2 border-gray-300 focus:border-blue-500 w-full"/>
+
+                            <input type="submit" value="Add Article" className="my-2 p-2 rounded-md outline-none bg-blue-500 hover:bg-blue-400 text-white w-full"/>
                         </fieldset>
                    </form>
                </section>

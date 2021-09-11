@@ -37,18 +37,18 @@ function Articles(props){
                                             <div className="ml-4">
                                                 {
                                                     props.isLoggedIn ? < Link to={`/profiles/${article.author.username}`}>
-                                                    <h5 className="text-red-500 font-bold text-xl">{article.author.username}</h5>
-                                                    </Link> : <h5 className="text-red-500 font-bold text-xl">{article.author.username}</h5>
+                                                    <h5 className="text-red-500 font-bold text-md lg:text-xl">{article.author.username}</h5>
+                                                    </Link> : <h5 className="text-red-500 font-bold text-md lg:text-xl">{article.author.username}</h5>
                                                 }
                                                 <h6>{getDate(article.createdAt)}</h6>
                                             </div>
                                         </div>
-                                        <h2 className="text-2xl font-bold mb-2">{article.title}</h2>
+                                        <h2 className="text-xl lg:text-2xl font-bold mb-2">{article.title}</h2>
                                         <Link to={`/articles/${article.slug}`}>
                                             <h4 className="bg-green-400 text-white font-bold rounded-lg inline-block py-1 px-3 text-sm">Read More</h4>
                                         </Link>
                                     </div>
-                                    <div className="flex items-center text-xl">
+                                    <div className="flex items-center sm:text-md lg:text-xl">
                                         <i className={!props.isLoggedIn ?  "fas fa-heart": article.favorited ? "fas fa-heart cursor-pointer text-pink-600" : "fas fa-heart cursor-pointer" } onClick={(e) => props.handleFavorite(e)} data-id={article.favorited} data-slug={article.slug}></i>
                                         <span className="ml-2">{article.favoritesCount}</span>
                                     </div>

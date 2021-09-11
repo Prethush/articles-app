@@ -5,7 +5,8 @@ module.exports = {
     extend: {
       flex: {
         70: "0 1 70%",
-        25: "0 1 25%"
+        25: "0 1 25%",
+        100: "0 1 100%"
       },
       fontFamily: {
         primary: ["Pacifico"],

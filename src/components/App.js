@@ -46,7 +46,6 @@ class App extends React.Component{
         }
     }
       
-   
 
         handleUser = (user) => {
             this.setState({isLoggedIn: true, user, loading: false});
