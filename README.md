@@ -15,6 +15,6 @@ After installing npm packages use this command to start the application
 ```bash
 npm start
 ````
-Deployment
+## Deployment
 
 https://blog-app-kt.netlify.app/
