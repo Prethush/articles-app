@@ -6,6 +6,7 @@ import FullPageLoader from "./FullPageLoader";
 import AuthenticatedApp from "./AuthenticatedApp";
 import UnauthenticatedApp from "./UnauthenticatedApp";
 import ErrorBoundary from "./ErrorBoundary";
+import {UserProvider} from "../context/userContext";
 
 class App extends React.Component{
        
@@ -18,7 +19,6 @@ class App extends React.Component{
         }
     }
 
-    
    componentDidMount(){
         let token = localStorage.getItem("token");
         if(token) {
@@ -47,7 +47,6 @@ class App extends React.Component{
         }
     }
       
-
         handleUser = (user) => {
             this.setState({isLoggedIn: true, user, loading: false});
             localStorage.setItem("token", user.token);
@@ -65,12 +64,14 @@ class App extends React.Component{
             return (
 
                 < Router>
+                   < UserProvider value={{data: this.state, handleUser: this.handleUser, handleLogout: this.handleLogout }}>
                     < ErrorBoundary >
-                        < Header {...this.state} handleLogout={this.handleLogout}/>
-                        {
-                            this.state.isLoggedIn ? < AuthenticatedApp {...this.state} handleUser={this.handleUser}/> : < UnauthenticatedApp handleUser = {this.handleUser} {...this.state}/>
-                        }
-                    </ErrorBoundary>
+                            < Header />
+                            {
+                                this.state.isLoggedIn ? < AuthenticatedApp /> : < UnauthenticatedApp />
+                            }
+                        </ErrorBoundary>
+                   </UserProvider>
                 </Router>
             )
         }

@@ -1,4 +1,6 @@
 import Loader from "./Loader";
+import {useContext} from "react";
+import UserContext from "../context/userContext";
 
 function Comments(props) {
 
@@ -7,7 +9,10 @@ function Comments(props) {
          return newDate;
      }
 
-    let {comments, loggedInUser, isLoggedIn} = props;
+    let user = useContext(UserContext);
+    let {comments} = props;
+    let {isLoggedIn} = user.data;
+    let loggedInUser = user.data.user.username;
     if(!comments) {
         return < Loader />
     }
@@ -18,7 +23,6 @@ function Comments(props) {
                 return  <div key={comment.createdAt} className="flex flex-col sm:flex-row sm:item-center p-6 bg-gray-100 mb-8 relative shadow-custom rounded-md">
                             <div className="">
                                 <img src={comment.author.image} alt={comment.author.username} className="w-16 h-16 rounded-full"/>
-                            
                             </div>
                             <div className="flex flex-col">
                             <div className="flex flex-col sm:flex-row sm:items-center">

@@ -5,6 +5,7 @@ import { articlesURL } from "../utils/constant";
 import Articles from "./Articles";
 import Pagination from "./Pagination";
 import {withRouter} from "react-router-dom";
+import UserContext from "../context/userContext";
 
 class Profile extends React.Component {
     
@@ -22,6 +23,8 @@ class Profile extends React.Component {
             info: ""
         }
     }
+
+    static contextType = UserContext;
     componentDidMount(){
         this.getUserInfo();
     }
@@ -146,7 +149,7 @@ class Profile extends React.Component {
             return < Loader />
         }
         let {username, image, bio} = this.state.user;
-        let loggenInUser = this.props.user.username;
+        let loggenInUser = this.context.data.user.username;
         let {articles, error, articlesCount, activePage, articlesPerPage, feedSelected, following} = this.state;
         return (
             <main>
@@ -176,7 +179,7 @@ class Profile extends React.Component {
                             Favorited</span>
                         </div>
                         <div className="">
-                            < Articles articles={articles} error={error} isLoggedIn={this.props.isLoggedIn} handleFavorite={this.handleFavorite}/>
+                            < Articles articles={articles} error={error} isLoggedIn={this.context.isLoggedIn} handleFavorite={this.handleFavorite}/>
                         </div>
                     </article>
                     <div className="text-center py-8">

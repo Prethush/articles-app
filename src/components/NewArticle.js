@@ -11,7 +11,8 @@ class NewArticle extends React.Component {
             description: "",
             body: "",
             tags: "",
-            error: ""
+            error: "",
+    
         }
     }
 
@@ -43,7 +44,7 @@ class NewArticle extends React.Component {
             }
            )
            .then((data) => {
-               this.props.history.push("/");
+               this.props.history.push("/articles");
            })
            .catch((err) => {
                console.log(err);

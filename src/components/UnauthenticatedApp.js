@@ -12,29 +12,29 @@ function UnauthenticatedApp(props) {
         
     return (
 
-              < Switch >
-                < Route path="/" exact>
-                    < Home />
-                </Route>
-                < Route path="/articles" exact>
-                    < Main {...props} />
-                </Route>
-                < Route path="/articles/:slug">
-                    < Article {...props}/>
-                </Route>
-                < Route path="/register">
-                    < Signup handleUser = {props.handleUser}/>
-                </Route>
-                < Route path="/login">
-                    < Signin handleUser={props.handleUser} />
-                </Route>
-                < Route path="*">
-                    < Nomatch />
-                </Route>
-            </Switch>
-       
-          
-        
+        < Switch >
+             < Route path="/" exact>
+                < Home />
+            </Route>
+            < Route path="/articles" exact>
+                < Main />
+            </Route>
+            < Route path="/" exact>
+                < Home />
+            </Route>
+            < Route path="/articles/:slug">
+                < Article />
+            </Route>
+            < Route path="/register">
+                < Signup />
+            </Route>
+            < Route path="/login">
+                < Signin />
+            </Route>
+            < Route path="*">
+                < Nomatch />
+            </Route>
+        </Switch>
     )
 }
 
