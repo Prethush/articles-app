@@ -9,18 +9,17 @@ function Header(props) {
     }
      
     return (
-       
         <header className="flex flex-col items-center py-6 sm:flex sm:flex-col sm:py-4 lg:flex lg:flex-row lg:justify-between  bg-gray-100 lg:px-20  sm:px-12 sm:items-center">
-                < NavLink to="/">
-                        <h1 className="text-3xl py-4 sm:text-3xl md:text-4xl font-bold text-green-500 font-tertiary">Blog App</h1>
-                </NavLink>
-                <nav>
-                    <ul className="flex flex-col text-xs sm:flex sm:flex-row">
-                      {
-                          props.isLoggedIn ? < Authenticated user = {props.user} handleLogout={handleLogout}/> : < Unauthenticated />
-                      } 
-                    </ul>
-                </nav>
+            < NavLink to="/">
+                    <h1 className="text-3xl py-4 sm:text-3xl md:text-4xl font-bold text-green-500 font-tertiary">Blog App</h1>
+            </NavLink>
+            <nav>
+                <ul className="flex flex-col text-xs sm:flex sm:flex-row">
+                    {
+                        props.isLoggedIn ? < Authenticated user = {props.user} handleLogout={handleLogout}/> : < Unauthenticated />
+                    } 
+                </ul>
+            </nav>
         </header>
     )
 }
@@ -59,13 +58,12 @@ function Authenticated(props) {
 function Unauthenticated(props) {
     return (
         <>
-              < NavLink activeClassName="active" to="/register">
-                    <li className="text-xl mr-6">Sign up</li>
-             </NavLink>
-             < NavLink activeClassName="active" to="/login">
-                    <li className="text-xl mr-6">Log in</li>
+            < NavLink activeClassName="active" to="/register">
+                <li className="text-xl mr-6">Sign up</li>
             </NavLink>
-
+            < NavLink activeClassName="active" to="/login">
+                <li className="text-xl mr-6">Log in</li>
+            </NavLink>
         </>
     )
 }

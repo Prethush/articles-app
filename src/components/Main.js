@@ -3,7 +3,7 @@ import Articles from "./Articles";
 import Tags from "./Tags";
 import {articlesURL, feedURL}  from "../utils/constant";
 import Pagination from "./Pagination";
-import BannerHomePage from "./BannerHomePage";
+
 
 class Main extends React.Component {
        
@@ -17,26 +17,22 @@ class Main extends React.Component {
                 activePage: 1,
                 tagSelected: "",
                 feedSelected: "",
+                info: ""
             }
         }
 
-        
-    
     componentDidMount() {
-            if(this.props.isLoggedIn) {
-                this.setState({feedSelected: "myfeed"}, this.getArticles);
-            }else {
-                this.setState({feedSelected: "global"}, this.getArticles);
-            }
-       
+        if(this.props.isLoggedIn) {
+            this.setState({feedSelected: "myfeed"}, this.getArticles);
+        }else {
+            this.setState({feedSelected: "global"}, this.getArticles);
         }
+    }
 
-   
     handleClick = ({target}) => {
         let {id} = target.dataset;
         this.setState({activePage: id}, this.getArticles);
     }
-
 
     getArticles = () => {
         let offset = (this.state.activePage - 1) * 10;
@@ -69,7 +65,6 @@ class Main extends React.Component {
         this.setState({tagSelected: value, activePage: 1, feedSelected: ""}, this.getArticles);
     }
 
-
     handleFavorite = ({target}) => {
         let {id, slug} = target.dataset;
         let method = id === "false" ? "POST" : "DELETE";
@@ -93,21 +88,19 @@ class Main extends React.Component {
             .then((data) => {
                 this.getArticles();
             })
-            .catch((err) => console.log(err));
+            .catch((err) => this.setState({info: err}));
         }
     }
 
-    
-
     render() {
+        if(this.state.info) {
+            throw new Error("Some thing went wrong");
+        }
         let {articles, error, articlesCount, articlesPerPage, activePage, feedSelected, tagSelected} = this.state;
         return (
             
             // Hero section
                 <main>
-                    {
-                        !this.props.isLoggedIn ? < BannerHomePage /> : ""
-                    }
                    <section className="px-8 py-12 lg:px-28 lg:py-12">
                         {/* feeds part */}
                         <div className="flex mb-3 text-xs sm:text-lg lg:text-xl">

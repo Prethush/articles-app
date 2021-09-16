@@ -18,29 +18,27 @@ class Profile extends React.Component {
             articlesPerPage: 10,
             activePage: 1,
             feedSelected: "author",
-            following: ""
+            following: "",
+            info: ""
         }
     }
-
-
     componentDidMount(){
         this.getUserInfo();
-        
     }
-
 
     getUserInfo = () => {
         let {id} = this.props.match.params;
-        fetch(profileURL + id , {
+        fetch(profileURL + id + ",,", {
             method: "GET",
             headers: {
                 "Authorization": "Bearer " + localStorage.token
             }
         })
         .then((res => {
+            console.log(res.ok);
             if(!res.ok) {
                 return res.json().then(({errors}) => {
-                    return Promise.reject();
+                    return Promise.reject(errors);
                 })
             }
             return res.json();
@@ -49,7 +47,7 @@ class Profile extends React.Component {
             console.log({profile});
             this.setState({user: profile, following: profile.following}, this.getArticles)
         })
-        .catch((err) => console.log(err));
+        .catch((err) => this.setState({info: err}));
     }
 
     handleFollow = () => {
@@ -74,7 +72,7 @@ class Profile extends React.Component {
             console.log(profile);
             this.setState({following: profile.following})
         })
-        .catch((err) => console.log(err));
+        .catch((err) => this.setState({info: err}));
     }
 
     componentDidUpdate() {
@@ -136,12 +134,14 @@ class Profile extends React.Component {
             .then((data) => {
                 this.getArticles();
             })
-            .catch((err) => console.log(err));
+            .catch((err) => this.setState({info: err}));
         }
         
 
     render() {
-       
+        if(this.state.info) {
+            throw new Error("Some thing went wrong");
+        }
         if(!this.state.user) {
             return < Loader />
         }
