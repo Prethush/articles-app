@@ -1,5 +1,6 @@
 
 import React from "react";
+import UserContext from "../context/userContext";
 import { articlesURL } from "../utils/constant";
 import Comments from "./Comments";
 
@@ -13,10 +14,10 @@ class CommentBox extends React.Component {
         };
     }
 
+    static contextType = UserContext;
     componentDidMount() {
         this.getComments();  
     }
-
 
     handleChange = ({target}) => {
         let {name, value} = target;
@@ -99,19 +100,21 @@ class CommentBox extends React.Component {
         }
         
         let {inputText, comments} = this.state;
-        let loggedInUser = this.props.user.username;
+        let loggedInUser = this.context.data.user.username;
+        console.log(loggedInUser, "user");
+        let {isLoggedIn} = this.context.data;
         return (
-                    <>
-                        <div className={this.props.isLoggedIn ? "" : "hidden"}>
-                            <form className="my-6 w-full" onSubmit={this.handleSubmit}>
-                                <textarea className="w-full border-2 border-gray-400 rounded-md p-3 outline-none focus:border-blue-500" rows="6" placeholder="Enter Comments" value={inputText} onChange={this.handleChange} name="inputText"></textarea>
-                                <input type="submit" value="Add Comment" className="bg-blue-500 w-min self-end my-4 py-2 px-4 text-white rounded-md cursor-pointer hover:bg-blue-400"/>
-                            </form>
-                        </div>
-                        <div className="my-8">
-                            < Comments  loggedInUser = {loggedInUser} comments = {comments} isLoggedIn = {this.props.isLoggedIn} handleDelete={this.handleDelete}/>
-                        </div>
-                    </>
+                <>
+                    <div className={isLoggedIn ? "" : "hidden"}>
+                        <form className="my-6 w-full" onSubmit={this.handleSubmit}>
+                            <textarea className="w-full border-2 border-gray-400 rounded-md p-3 outline-none focus:border-blue-500" rows="6" placeholder="Enter Comments" value={inputText} onChange={this.handleChange} name="inputText"></textarea>
+                            <input type="submit" value="Add Comment" className="bg-blue-500 w-min self-end my-4 py-2 px-4 text-white rounded-md cursor-pointer hover:bg-blue-400"/>
+                        </form>
+                    </div>
+                    <div className="my-8">
+                        < Comments  comments = {comments} handleDelete={this.handleDelete}/>
+                    </div>
+                </>
                 )
             }
         }

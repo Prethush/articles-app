@@ -1,10 +1,15 @@
 import {NavLink, withRouter} from "react-router-dom";
+import {useContext} from "react";
+import UserContext from "../context/userContext";
+
 
 function Header(props) {
-
-    function handleLogout() {
+    let userData = useContext(UserContext);
+    let {isLoggedIn} = userData.data;
+    let {handleLogout} = userData;
+    function logout() {
         localStorage.clear();
-        props.handleLogout();
+        handleLogout();
         props.history.push("/");
     }
      
@@ -16,7 +21,7 @@ function Header(props) {
             <nav>
                 <ul className="flex flex-col text-xs sm:flex sm:flex-row">
                     {
-                        props.isLoggedIn ? < Authenticated user = {props.user} handleLogout={handleLogout}/> : < Unauthenticated />
+                        isLoggedIn ? < Authenticated handleLogout={logout} />: < Unauthenticated />
                     } 
                 </ul>
             </nav>
@@ -25,12 +30,15 @@ function Header(props) {
 }
 
 function Authenticated(props) {
+    let userData = useContext(UserContext);
+    let {user} = userData.data;
+    let {handleLogout} = props;
     return (
         <>
-            <NavLink activeClassName="active" to={`/profiles/${props.user.username}`}>
+            <NavLink activeClassName="active" to={`/profiles/${user.username}`}>
                 <li className="flex items-center text-xl mx-3 ">
                     <i className="fas fa-user mr-2"></i>
-                    <span className="">{props.user.username}</span>
+                    <span className="">{user.username}</span>
                 </li>
             </NavLink>
 
@@ -49,7 +57,7 @@ function Authenticated(props) {
             </NavLink>
 
            <li className="text-xl mx-3">
-               <span className="cursor-pointer" onClick={props.handleLogout}>Logout</span>
+               <span className="cursor-pointer" onClick={handleLogout}>Logout</span>
            </li>
         </>
     )

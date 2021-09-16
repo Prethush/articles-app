@@ -3,7 +3,7 @@ import Articles from "./Articles";
 import Tags from "./Tags";
 import {articlesURL, feedURL}  from "../utils/constant";
 import Pagination from "./Pagination";
-
+import UserContext from "../context/userContext";
 
 class Main extends React.Component {
        
@@ -20,9 +20,12 @@ class Main extends React.Component {
                 info: ""
             }
         }
+    
+    static contextType = UserContext;
 
     componentDidMount() {
-        if(this.props.isLoggedIn) {
+        let {isLoggedIn} = this.context.data;
+        if(isLoggedIn) {
             this.setState({feedSelected: "myfeed"}, this.getArticles);
         }else {
             this.setState({feedSelected: "global"}, this.getArticles);
@@ -66,11 +69,10 @@ class Main extends React.Component {
     }
 
     handleFavorite = ({target}) => {
+        let {isLoggedIn} = this.context.data;
         let {id, slug} = target.dataset;
         let method = id === "false" ? "POST" : "DELETE";
-        console.log(method);
-        console.log(id, slug);
-        if(this.props.isLoggedIn) {
+        if(isLoggedIn) {
             fetch(articlesURL + "/" + slug + "/favorite", {
                 method: method,
                 headers: {
@@ -93,6 +95,7 @@ class Main extends React.Component {
     }
 
     render() {
+        let {isLoggedIn} = this.context.data;
         if(this.state.info) {
             throw new Error("Some thing went wrong");
         }
@@ -104,7 +107,7 @@ class Main extends React.Component {
                    <section className="px-8 py-12 lg:px-28 lg:py-12">
                         {/* feeds part */}
                         <div className="flex mb-3 text-xs sm:text-lg lg:text-xl">
-                            <span className={!this.props.isLoggedIn?  "hidden": feedSelected === "myfeed" ? "mr-8 cursor-pointer text-green-500 pb-2 border-b-2 border-green-500": " mr-8 cursor-pointer green"}  onClick={() => {
+                            <span className={!isLoggedIn?  "hidden": feedSelected === "myfeed" ? "mr-8 cursor-pointer text-green-500 pb-2 border-b-2 border-green-500": " mr-8 cursor-pointer green"}  onClick={() => {
                                 this.setState({activePage: 1, feedSelected: "myfeed", tagSelected: ""}, this.getArticles)
                             }}> <i className="fas fa-newspaper mr-2"></i>
                                 My feed
@@ -128,7 +131,7 @@ class Main extends React.Component {
 
                              {/* articles part */}
                             <div className="flex-100 lg:flex-70">
-                                < Articles articles={articles} error={error} isLoggedIn={this.props.isLoggedIn}  handleFavorite = {this.handleFavorite}/>
+                                < Articles articles={articles} error={error} handleFavorite = {this.handleFavorite}/>
                             </div>
 
                         {/* tags part */}

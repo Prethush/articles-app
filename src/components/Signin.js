@@ -1,5 +1,6 @@
 import React from "react";
 import {Link, withRouter} from "react-router-dom";
+import UserContext from "../context/userContext";
 import { loginURL } from "../utils/constant";
 
 
@@ -12,8 +13,7 @@ class Signin extends React.Component {
             error: ""
         };
     }
-
-
+     static contextType = UserContext;
     handleChange = ({target}) => {
         let {name, value} = target;
         this.setState({[name]: value});
@@ -41,14 +41,12 @@ class Signin extends React.Component {
                 return res.json();
             })
             .then((data) => {
-                this.props.handleUser(data.user);
-                this.props.history.push("/");
+                this.context.handleUser(data.user);
+                this.props.history.push("/articles");
             })
             .catch((err) => this.setState({passwd: "", email: "", error}));
         }
     }
-
-    
 
     render() {
         let {error} = this.state;

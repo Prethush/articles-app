@@ -2,6 +2,7 @@ import React from "react";
 import {Link, withRouter} from "react-router-dom";
 import { validate } from "../utils/validate";
 import { registerURL } from "../utils/constant";
+import UserContext from "../context/userContext";
 
 class Signup extends React.Component {
     constructor(props) {
@@ -17,7 +18,7 @@ class Signup extends React.Component {
             }
         };
     }
-
+    static contextType = UserContext;
     handleChange = ({target}) => {
         let {name, value} = target;
         let errors = this.state.errors;
@@ -50,14 +51,12 @@ class Signup extends React.Component {
                 return res.json();
             })
             .then((data) => {
-                this.props.handleUser(data.user);
                 this.props.history.push("/login");
             })
             .catch((err) => this.setState({passwd: "", email: "", username: "", errors}));
         }
     }
-
-    
+ 
     render() {
         let {username, passwd, email} = this.state.errors;
         let {info} = this.state;

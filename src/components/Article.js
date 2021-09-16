@@ -3,6 +3,7 @@ import { articlesURL } from "../utils/constant";
 import Loader from "./Loader";
 import {withRouter} from "react-router-dom";
 import CommentBox from "./CommentBox";
+import UserContext from "../context/userContext";
 
 
 class Article extends React.Component{
@@ -14,7 +15,7 @@ class Article extends React.Component{
             info: ""
         };
     }
-
+    static contextType = UserContext
     componentDidMount() {
         this.getArticle();
     }
@@ -51,7 +52,7 @@ class Article extends React.Component{
      }
 
      handleDelete = () => {
-         let {user} = this.props;
+         let {user} = this.context.data;
          console.log(user.username, "username");
          fetch(articlesURL + "/" + this.props.match.params.slug, {
              method: "DELETE",
@@ -70,14 +71,12 @@ class Article extends React.Component{
          .catch((err) => this.setState({info: err}));
      }
 
-     
-
     render() {
         if(this.state.info) {
             throw new Error("Something went wrong");
         }
         let {error, article} = this.state;
-        let {isLoggedIn, user} = this.props;
+        let {isLoggedIn, user} = this.context.data;
             if(error) {
                 return <h2 className="text-red-500 text-center text-xl mt-8">{error}</h2>
             }
@@ -123,7 +122,7 @@ class Article extends React.Component{
 
                 <section className="px-20">
                     <h2 className="text-3xl font-bold">Comments</h2>
-                    < CommentBox {...this.props} slug={article.slug}/>
+                    < CommentBox slug={article.slug}/>
                 </section> 
             </main>
         )

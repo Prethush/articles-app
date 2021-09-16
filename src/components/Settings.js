@@ -2,17 +2,18 @@ import React from "react";
 import {validate} from "../utils/validate";
 import { userURL } from "../utils/constant";
 import {withRouter} from "react-router-dom";
-
+import UserContext from "../context/userContext";
+import Loader from "./Loader";
 class Settings extends React.Component {
-
+    
     constructor(props) {
         super();
         this.state = {
-            image: props.user.image,
-            username: props.user.username,
-            email: props.user.email,
+            image: "",
+            username: "",
+            email: "",
             passwd: "",
-            bio: props.user.bio,
+            bio: "",
             errors: {
                 username: "",
                 email: "", 
@@ -20,7 +21,11 @@ class Settings extends React.Component {
             }
         }
     }
-
+    static contextType = UserContext;
+    componentDidMount() {
+        let {image, username, email, bio} = this.context.data.user;
+        this.setState({image, username, email, bio});
+    }
     handleChange = ({target}) => {
         let {name, value} = target;
         let {errors} = this.state;
@@ -53,16 +58,20 @@ class Settings extends React.Component {
                 return res.json();
             })
             .then((data) => {
-                this.props.handleUser(data.user);
+                this.context.handleUser(data.user);
                 this.props.history.push(`/profiles/${data.user.username}`);
             })
             .catch((err) => this.setState({errors}));
         }
     }
 
+
     render() {
+       
+        if(!this.state.username && !this.state.email && !this.state.image && !this.state.bio) {
+            return < Loader />
+        }
         let {username, email, passwd} = this.state.errors;
-        
         return (
            <main className="">
                <section className="pt-20 px-8">

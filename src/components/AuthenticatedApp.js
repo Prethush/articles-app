@@ -14,27 +14,24 @@ function AuthenticatedApp(props) {
         
     return (
             < Switch >
+                < Route path="/articles" exact>
+                    < Main />
+                </Route>
                 < Route path="/" exact>
                     < Home />
-                </Route>
-                < Route path="/" exact>
-                    < Main {...props} />
-                </Route>
-                < Route path="/articles" exact>
-                    < Main {...props} />
                 </Route>
                 < Route path="/articles/edit/:slug">
                     < UpdateArticle />
                 </Route>
             
                 < Route path="/articles/:slug">
-                    < Article {...props}/>
+                    < Article />
                 </Route>
                 < Route path="/addArticle">
                     < NewArticle />
                 </Route>
                 < Route path="/settings">
-                    < Settings user={props.user} handleUser={props.handleUser}/>
+                    < Settings />
                 </Route>
                 < Route path="/profiles/:id">
                     < Profile user={props.user} isLoggedIn={props.isLoggedIn}/>
@@ -44,9 +41,7 @@ function AuthenticatedApp(props) {
                     < Nomatch />
                 </Route>
             </Switch>
-       
-           
-    )
-}
+        )
+    }
 
 export default AuthenticatedApp;
