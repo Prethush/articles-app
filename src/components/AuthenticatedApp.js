@@ -7,39 +7,45 @@ import NewArticle from "./NewArticle";
 import Settings from "./Settings";
 import Profile from "./Profile";
 import UpdateArticle from "./UpdateArticle";
+import Home from "./Home";
+// import ErrorBoundary from "./ErrorBoundary";
 
 function AuthenticatedApp(props) {
         
     return (
-        < Switch >
-            < Route path="/" exact>
-                < Main {...props} />
-            </Route>
-        
-            < Route path="/articles" exact>
-                < Main {...props} />
-            </Route>
-            < Route path="/articles/edit/:slug">
-                < UpdateArticle />
-            </Route>
-        
-            < Route path="/articles/:slug">
-                < Article {...props}/>
-            </Route>
-            < Route path="/addArticle">
-                < NewArticle />
-            </Route>
-            < Route path="/settings">
-                < Settings user={props.user} handleUser={props.handleUser}/>
-            </Route>
-            < Route path="/profiles/:id">
-                < Profile user={props.user} isLoggedIn={props.isLoggedIn}/>
-            </Route>
-        
-            < Route path="*">
-                < Nomatch />
-            </Route>
-        </Switch>
+            < Switch >
+                < Route path="/" exact>
+                    < Home />
+                </Route>
+                < Route path="/" exact>
+                    < Main {...props} />
+                </Route>
+                < Route path="/articles" exact>
+                    < Main {...props} />
+                </Route>
+                < Route path="/articles/edit/:slug">
+                    < UpdateArticle />
+                </Route>
+            
+                < Route path="/articles/:slug">
+                    < Article {...props}/>
+                </Route>
+                < Route path="/addArticle">
+                    < NewArticle />
+                </Route>
+                < Route path="/settings">
+                    < Settings user={props.user} handleUser={props.handleUser}/>
+                </Route>
+                < Route path="/profiles/:id">
+                    < Profile user={props.user} isLoggedIn={props.isLoggedIn}/>
+                </Route>
+            
+                < Route path="*">
+                    < Nomatch />
+                </Route>
+            </Switch>
+       
+           
     )
 }
 

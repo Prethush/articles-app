@@ -57,9 +57,7 @@ class Signup extends React.Component {
         }
     }
 
-    componentWillUnmount() {
-        
-    }
+    
     render() {
         let {username, passwd, email} = this.state.errors;
         let {info} = this.state;

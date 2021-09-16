@@ -11,6 +11,7 @@ class Article extends React.Component{
         this.state = {
             article: "",
             error: "",
+            info: ""
         };
     }
 
@@ -18,7 +19,6 @@ class Article extends React.Component{
         this.getArticle();
     }
 
-    
     getArticle = () => {
         fetch(articlesURL + `/${this.props.match.params.slug}`)
         .then((res) => {
@@ -67,12 +67,15 @@ class Article extends React.Component{
             }
             this.props.history.push(`/profiles/${user.username}`);
          })
-         .catch((err) => console.log(err));
+         .catch((err) => this.setState({info: err}));
      }
 
      
 
     render() {
+        if(this.state.info) {
+            throw new Error("Something went wrong");
+        }
         let {error, article} = this.state;
         let {isLoggedIn, user} = this.props;
             if(error) {

@@ -5,6 +5,7 @@ import { userURL } from "../utils/constant";
 import FullPageLoader from "./FullPageLoader";
 import AuthenticatedApp from "./AuthenticatedApp";
 import UnauthenticatedApp from "./UnauthenticatedApp";
+import ErrorBoundary from "./ErrorBoundary";
 
 class App extends React.Component{
        
@@ -62,11 +63,14 @@ class App extends React.Component{
                 }
                 
             return (
+
                 < Router>
-                    < Header {...this.state} handleLogout={this.handleLogout}/>
-                    {
-                        this.state.isLoggedIn ? < AuthenticatedApp {...this.state} handleUser={this.handleUser}/> : < UnauthenticatedApp handleUser = {this.handleUser} {...this.state}/>
-                    }
+                    < ErrorBoundary >
+                        < Header {...this.state} handleLogout={this.handleLogout}/>
+                        {
+                            this.state.isLoggedIn ? < AuthenticatedApp {...this.state} handleUser={this.handleUser}/> : < UnauthenticatedApp handleUser = {this.handleUser} {...this.state}/>
+                        }
+                    </ErrorBoundary>
                 </Router>
             )
         }

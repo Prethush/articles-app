@@ -4,8 +4,7 @@ import Loader from "./Loader";
 
 class Tags extends React.Component{
    
-    constructor(props) {
-       
+    constructor(props) { 
         super();
         this.state = {
             allTags: null,
@@ -13,7 +12,6 @@ class Tags extends React.Component{
         }
     }
 
-   
     componentDidMount() {
         fetch(tagsURL)
         .then((res) => {
@@ -30,9 +28,6 @@ class Tags extends React.Component{
         });
      }
         
-    
-
-
     render() {
         let {error, allTags} = this.state;
         
