@@ -123,7 +123,6 @@ class Main extends React.Component {
                             </div>
                         </div>
 
-                       
                         <div className="flex flex-col lg:flex-row lg:justify-between py-8">
 
                              {/* articles part */}
