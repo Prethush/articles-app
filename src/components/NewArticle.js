@@ -12,7 +12,6 @@ class NewArticle extends React.Component {
             body: "",
             tags: "",
             error: "",
-    
         }
     }
 

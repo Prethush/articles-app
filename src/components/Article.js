@@ -12,7 +12,6 @@ class Article extends React.Component{
         this.state = {
             article: "",
             error: "",
-            info: ""
         };
     }
     static contextType = UserContext
@@ -68,13 +67,10 @@ class Article extends React.Component{
             }
             this.props.history.push(`/profiles/${user.username}`);
          })
-         .catch((err) => this.setState({info: err}));
+         .catch((err) => console.log(err));
      }
 
     render() {
-        if(this.state.info) {
-            throw new Error("Something went wrong");
-        }
         let {error, article} = this.state;
         let {isLoggedIn, user} = this.context.data;
             if(error) {
