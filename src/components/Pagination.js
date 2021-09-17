@@ -13,7 +13,6 @@ function Pagination(props) {
     let {articlesPerPage, articlesCount, activePage} = props;
     let arr = getTotalPages(articlesPerPage, articlesCount);
     return (
-       
         <>
             {
                 arr.length > 1 && arr.map((p, i) => {

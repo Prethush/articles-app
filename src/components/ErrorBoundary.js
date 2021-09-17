@@ -4,12 +4,14 @@ class ErrorBoundary extends React.Component {
   
   state = {
     hasError: false,
-    error: null,
-    errorInfo: null
   }
+
+  static getDerivedStateFromError(){
+    this.setState({hasError: true});
+  }
+
   componentDidCatch(error, errorInfo) {
-    console.log("testing");
-    this.setState({hasError: true, error, errorInfo});
+    console.log(error);
   }
 
   handleClick = () => {

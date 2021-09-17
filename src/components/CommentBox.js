@@ -10,7 +10,6 @@ class CommentBox extends React.Component {
         this.state = {
             inputText: "",
             comments: "",
-            info: ""
         };
     }
 
@@ -49,7 +48,7 @@ class CommentBox extends React.Component {
                 console.log(data);
                this.setState({inputText: "", comments: ""}, this.getComments);
             })
-            .catch((err) => this.setState({info: err}));
+            .catch((err) => console.log(err));
         }
     }
 
@@ -71,7 +70,7 @@ class CommentBox extends React.Component {
             }
             this.setState({comments: ""}, this.getComments);
         })
-        .catch((err) => this.setState({info: err}));
+        .catch((err) => console.log(err));
     }
     
     getComments = () => {
@@ -89,16 +88,12 @@ class CommentBox extends React.Component {
             console.log(comments);
             this.setState({comments})
         })
-        .catch((err) => this.setState({info: err}));
+        .catch((err) => console.log(err));
     }
 
    
 
     render() {
-        if(this.state.info) {
-            throw new Error("Something went wrong");
-        }
-        
         let {inputText, comments} = this.state;
         let loggedInUser = this.context.data.user.username;
         console.log(loggedInUser, "user");

@@ -17,7 +17,6 @@ class Main extends React.Component {
                 activePage: 1,
                 tagSelected: "",
                 feedSelected: "",
-                info: ""
             }
         }
     
@@ -90,15 +89,12 @@ class Main extends React.Component {
             .then((data) => {
                 this.getArticles();
             })
-            .catch((err) => this.setState({info: err}));
+            .catch((err) => console.log(err));
         }
     }
 
     render() {
         let {isLoggedIn} = this.context.data;
-        if(this.state.info) {
-            throw new Error("Some thing went wrong");
-        }
         let {articles, error, articlesCount, articlesPerPage, activePage, feedSelected, tagSelected} = this.state;
         return (
             

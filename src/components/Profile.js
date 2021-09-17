@@ -20,7 +20,6 @@ class Profile extends React.Component {
             activePage: 1,
             feedSelected: "author",
             following: "",
-            info: ""
         }
     }
 
@@ -50,7 +49,7 @@ class Profile extends React.Component {
             console.log({profile});
             this.setState({user: profile, following: profile.following}, this.getArticles)
         })
-        .catch((err) => this.setState({info: err}));
+        .catch((err) => console.log(err));
     }
 
     handleFollow = () => {
@@ -75,7 +74,7 @@ class Profile extends React.Component {
             console.log(profile);
             this.setState({following: profile.following})
         })
-        .catch((err) => this.setState({info: err}));
+        .catch((err) => console.log(err));
     }
 
     componentDidUpdate() {
@@ -137,14 +136,11 @@ class Profile extends React.Component {
             .then((data) => {
                 this.getArticles();
             })
-            .catch((err) => this.setState({info: err}));
+            .catch((err) => console.log(err));
         }
         
 
     render() {
-        if(this.state.info) {
-            throw new Error("Some thing went wrong");
-        }
         if(!this.state.user) {
             return < Loader />
         }

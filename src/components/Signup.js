@@ -59,7 +59,7 @@ class Signup extends React.Component {
  
     render() {
         let {username, passwd, email} = this.state.errors;
-        let {info} = this.state;
+        // let {info} = this.state;
         
         return (
             <main>
@@ -72,7 +72,7 @@ class Signup extends React.Component {
                             </Link>
                         </div>
                         <fieldset className="my-3">
-                            <span className="text-red-500">{info}</span>
+                            {/* <span className="text-red-500">{info}</span> */}
                             <input className="block w-full my-3 py-2 px-3 border border-gray-400 rounded-md"type="text" placeholder="Enter Username" value={this.state.username} name="username" onChange={(e) => this.handleChange(e)}/>
                             <span className="text-red-500">{username}</span>
 
