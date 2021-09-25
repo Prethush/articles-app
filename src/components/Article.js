@@ -97,7 +97,7 @@ class Article extends React.Component{
                        <div className="flex flex-col sm:flex-row sm:justify-between">
                             {
                                 tagList.map((tag) => {
-                                    return  <span key={tag} className="mr-3 bg-red-400 p-1 px-2 text-xs rounded-md w-max my-2">{tag}</span>
+                                    return  tag && <span key={tag} className="mr-3 bg-red-400 p-1 px-2 text-xs rounded-md w-max my-2">{tag}</span>
 
                                 })
                             }
