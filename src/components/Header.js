@@ -1,28 +1,28 @@
-import {NavLink, withRouter} from "react-router-dom";
-import {useContext} from "react";
+import { NavLink, withRouter } from "react-router-dom";
+import { useContext } from "react";
 import UserContext from "../context/userContext";
 
 
 function Header(props) {
     let userData = useContext(UserContext);
-    let {isLoggedIn} = userData.data;
-    let {handleLogout} = userData;
+    let { isLoggedIn } = userData.data;
+    let { handleLogout } = userData;
     function logout() {
         localStorage.clear();
         handleLogout();
         props.history.push("/");
     }
-     
+
     return (
-        <header className="flex flex-col items-center py-6 sm:flex sm:flex-col sm:py-4 lg:flex lg:flex-row lg:justify-between  bg-gray-100 lg:px-20  sm:px-12 sm:items-center">
+        <header className="flex flex-col items-center py-6  sm:py-4 sm:items-center lg:flex-row lg:justify-between  bg-gray-100 sm:px-12 lg:px-20">
             < NavLink to="/">
-                    <h1 className="text-3xl py-4 sm:text-3xl md:text-4xl font-bold text-green-500 font-tertiary">Blog App</h1>
+                <h1 className="text-3xl py-4 md:text-4xl font-bold text-green-500 font-tertiary">Blog App</h1>
             </NavLink>
             <nav>
-                <ul className="flex flex-col text-xs sm:flex sm:flex-row">
+                <ul className="flex flex-col text-xs sm:flex-row">
                     {
-                        isLoggedIn ? < Authenticated handleLogout={logout} />: < Unauthenticated />
-                    } 
+                        isLoggedIn ? < Authenticated handleLogout={logout} /> : < Unauthenticated />
+                    }
                 </ul>
             </nav>
         </header>
@@ -31,8 +31,8 @@ function Header(props) {
 
 function Authenticated(props) {
     let userData = useContext(UserContext);
-    let {user} = userData.data;
-    let {handleLogout} = props;
+    let { user } = userData.data;
+    let { handleLogout } = props;
     return (
         <>
             <NavLink activeClassName="active" to={`/profiles/${user.username}`}>
@@ -56,9 +56,9 @@ function Authenticated(props) {
                 </li>
             </NavLink>
 
-           <li className="text-xl mx-3">
-               <span className="cursor-pointer" onClick={handleLogout}>Logout</span>
-           </li>
+            <li className="text-xl mx-3">
+                <span className="cursor-pointer" onClick={handleLogout}>Logout</span>
+            </li>
         </>
     )
 }
