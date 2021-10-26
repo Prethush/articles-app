@@ -14,11 +14,13 @@ class Article extends React.Component{
             error: "",
         };
     }
-    static contextType = UserContext
+    static contextType = UserContext;
+
     componentDidMount() {
         this.getArticle();
     }
 
+    //function to fetch the article details
     getArticle = () => {
         fetch(articlesURL + `/${this.props.match.params.slug}`)
         .then((res) => {
@@ -29,18 +31,20 @@ class Article extends React.Component{
         })
         .then((data) => {
             console.log(data, "article");
-            this.setState({article: data.article }, this.getUserInfo);
+            this.setState({article: data.article });
         })
         .catch((err) => {
             this.setState({error: "Not able to fetch Articles"});
         });
     }
     
+    //function to display date in nicer format
     getDate = (date) => {
         let newDate =  new Date(date).toISOString().split('T')[0];
          return newDate;
      }
 
+     //function to handle article edit
      handleEdit = () => {
          let {slug} = this.state.article;
          console.log(this.props, "props");
@@ -50,6 +54,7 @@ class Article extends React.Component{
          });
      }
 
+     //function to delete article
      handleDelete = () => {
          let {user} = this.context.data;
          console.log(user.username, "username");
@@ -83,8 +88,6 @@ class Article extends React.Component{
             let {tagList} = article; 
         return (
             <main className="pb-12">
-
-                {/* hero section */}
                 <section className="px-20 bg-articlePage text-white py-12">
                     <h2 className="mt-2 mb-3 text-4xl">{article.title}</h2>
                     <p className="">{article.description}</p>
@@ -115,7 +118,8 @@ class Article extends React.Component{
                  <section className="px-20 py-12">
                     <p className="text-xl">{article.body}</p>
                 </section> 
-
+                
+                {/* Comments*/}
                 <section className="px-20">
                     <h2 className="text-3xl font-bold">Comments</h2>
                     < CommentBox slug={article.slug}/>

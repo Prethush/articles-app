@@ -91,8 +91,6 @@ class CommentBox extends React.Component {
         .catch((err) => console.log(err));
     }
 
-   
-
     render() {
         let {inputText, comments} = this.state;
         let loggedInUser = this.context.data.user.username;

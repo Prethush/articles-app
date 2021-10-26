@@ -11,7 +11,6 @@ import Home from "./Home";
 function UnauthenticatedApp(props) {
         
     return (
-
         < Switch >
              < Route path="/" exact>
                 < Home />

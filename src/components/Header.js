@@ -7,6 +7,8 @@ function Header(props) {
     let userData = useContext(UserContext);
     let { isLoggedIn } = userData.data;
     let { handleLogout } = userData;
+
+    // handle logout
     function logout() {
         localStorage.clear();
         handleLogout();
@@ -29,6 +31,7 @@ function Header(props) {
     )
 }
 
+//This function takes care of elements to display when the user is logged in
 function Authenticated(props) {
     let userData = useContext(UserContext);
     let { user } = userData.data;
@@ -63,6 +66,7 @@ function Authenticated(props) {
     )
 }
 
+//This function takes care of elements to display when the user is not loggeg in
 function Unauthenticated(props) {
     return (
         <>

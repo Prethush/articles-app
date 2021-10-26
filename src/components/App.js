@@ -18,7 +18,7 @@ class App extends React.Component{
             loading: true
         }
     }
-
+    //check a user is logged in or not 
    componentDidMount(){
         let token = localStorage.getItem("token");
         if(token) {
@@ -38,7 +38,7 @@ class App extends React.Component{
                 return res.json();
             })
             .then((data) => {
-            
+                console.log(data, "data");
                 this.handleUser(data.user);
             })
             .catch((err) => console.log(err));
@@ -46,36 +46,37 @@ class App extends React.Component{
             this.setState({loading: false});
         }
     }
-      
-        handleUser = (user) => {
-            this.setState({isLoggedIn: true, user, loading: false});
-            localStorage.setItem("token", user.token);
-        }
-
-        handleLogout = () => {
-            this.setState({isLoggedIn: false});
-        }
     
-        render() {
-                if(this.state.loading) {
-                    return < FullPageLoader />
-                }
-                
-            return (
-
-                < Router>
-                   < UserProvider value={{data: this.state, handleUser: this.handleUser, handleLogout: this.handleLogout }}>
-                    < ErrorBoundary >
-                            < Header />
-                            {
-                                this.state.isLoggedIn ? < AuthenticatedApp /> : < UnauthenticatedApp />
-                            }
-                        </ErrorBoundary>
-                   </UserProvider>
-                </Router>
-            )
-        }
+    //update the state when user is logged in
+    handleUser = (user) => {
+        this.setState({isLoggedIn: true, user, loading: false});
+        localStorage.setItem("token", user.token);
     }
+    //handle logout
+    handleLogout = () => {
+        this.setState({isLoggedIn: false});
+    }
+    
+    render() {
+            if(this.state.loading) {
+                return < FullPageLoader />
+            }
+            
+        return (
+
+            < Router>
+                < UserProvider value={{data: this.state, handleUser: this.handleUser, handleLogout: this.handleLogout }}>
+                < ErrorBoundary >
+                        < Header />
+                        {
+                            this.state.isLoggedIn ? < AuthenticatedApp /> : < UnauthenticatedApp />
+                        }
+                    </ErrorBoundary>
+                </UserProvider>
+            </Router>
+        )
+    }
+}
 
     
 
